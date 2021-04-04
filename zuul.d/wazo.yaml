@@ -1,0 +1,340 @@
+- nodeset:
+    name: debian9-vm
+    nodes:
+      - label: debian9-vm
+        name: debian9-node
+
+- nodeset:
+    name: debian10-vm
+    nodes:
+      - label: debian10-vm
+        name: debian10-node
+
+- nodeset:
+    name: debian10-vm-m2
+    nodes:
+      - label: debian10-vm-m2
+        name: debian10-m2-node
+
+- nodeset:
+    name: runc-debian-buster
+    nodes:
+      - label: runc-debian-buster
+        name: test-node
+
+- nodeset:
+    name: runc-debian-stretch
+    nodes:
+      - label: runc-debian-stretch
+        name: test-node
+
+- job:
+    name: wazo-tox
+    parent: tox
+    description: |
+      Run tox
+
+      Like tox but
+      * install sibling packages in virtualenv for Depends-On too
+      * install sibling packages in docker compose environement for integration if enabled
+        with docker_install_siblings
+    run: playbooks/wazo-tox/run.yaml
+    post-run: playbooks/wazo-tox/post.yaml
+
+- job:
+    name: wazo-tox-molecule
+    parent: wazo-tox
+    vars:
+      tox_envlist: molecule
+
+- job:
+    name: wazo-tox-integration
+    parent: wazo-tox
+    vars:
+      docker_install_siblings: true
+      tox_envlist: integration
+    run: playbooks/wazo-tox-integration/run.yaml
+
+- job:
+    name: wazo-tox-py27
+    parent: wazo-tox
+    vars:
+      tox_envlist: py27
+
+- job:
+    name: wazo-tox-py37
+    parent: wazo-tox
+    vars:
+      tox_envlist: py37
+
+- job:
+    name: debian-packaging
+    run: playbooks/debian-packaging/run.yaml
+    provides: repo
+
+- job:
+    name: docker-build
+    run: playbooks/docker-build/run.yaml
+
+- job:
+    name: wazo-c4-docker-build-test
+    run: playbooks/wazo-c4-docker-build-test/run.yaml
+    post-run: playbooks/wazo-c4-test/fetch-logs.yaml
+
+- job:
+    name: wazo-c4-test
+    run: playbooks/wazo-c4-test/run.yaml
+    post-run: playbooks/wazo-c4-test/fetch-logs.yaml
+
+- job:
+    name: yarn-build
+    description: Run yarn build
+    pre-run: playbooks/yarn/pre.yaml
+    run: playbooks/yarn/run.yaml
+
+- job:
+    name: wazo-acceptance-job
+    description: install Wazo platform and run acceptance tests
+    required-projects:
+      - wazo-platform/wazo-ansible
+      - wazo-platform/wazo-acceptance
+      - wazo-platform/xivo-ci
+    timeout: 10800
+    pre-run: playbooks/wazo-acceptance/pre.yaml
+    run: playbooks/wazo-acceptance/run.yaml
+    post-run: playbooks/wazo-acceptance/fetch-logs.yaml
+
+- job:
+    name: wazo-ansible-uc-job
+    description: Install Wazo Platform UC use case
+    timeout: 10800
+    pre-run: playbooks/wazo-ansible/pre.yaml
+    run: playbooks/wazo-ansible/run.yaml
+    post-run: playbooks/wazo-ansible/fetch-logs.yaml
+    vars:
+      wazo_debian_repo: main
+      wazo_distribution: wazo-dev-buster
+    required-projects:
+      wazo-platform/xivo-ci
+
+- project-template:
+    name: wazo-ansible-uc-template
+    description: Project template to test the UC installer
+    check:
+      jobs:
+        - wazo-ansible-uc-job:
+            nodeset: debian10-vm
+    gate:
+      jobs:
+        - wazo-ansible-uc-job:
+            nodeset: debian10-vm
+
+- project-template:
+    name: wazo-tox-py37-vm
+    description: Project template for tox -e py37
+    check:
+      jobs:
+        - wazo-tox-py37:
+            nodeset: debian10-vm
+    gate:
+      jobs:
+        - wazo-tox-py37:
+            nodeset: debian10-vm
+    auto-merge:
+      jobs:
+        - wazo-tox-py37:
+            nodeset: debian10-vm
+
+- project-template:
+    name: wazo-tox-py37
+    description: Project template for tox -e py37
+    check:
+      jobs:
+        - wazo-tox-py37:
+            nodeset: runc-debian-buster
+    gate:
+      jobs:
+        - wazo-tox-py37:
+            nodeset: runc-debian-buster
+    auto-merge:
+      jobs:
+        - wazo-tox-py37:
+            nodeset: runc-debian-buster
+
+- project-template:
+    name: wazo-tox-py35
+    description: Project template for tox -e py35
+    check:
+      jobs:
+        - wazo-tox-py35:
+            nodeset: runc-debian-stretch
+    gate:
+      jobs:
+        - wazo-tox-py35:
+            nodeset: runc-debian-stretch
+    auto-merge:
+      jobs:
+        - wazo-tox-py35:
+            nodeset: runc-debian-stretch
+
+- project-template:
+    name: wazo-tox-linters
+    description: Project template for tox -e linters
+    check:
+      jobs:
+        - tox-linters:
+            nodeset: runc-debian-buster
+    gate:
+      jobs:
+        - tox-linters:
+            nodeset: runc-debian-buster
+    auto-merge:
+      jobs:
+        - tox-linters:
+            nodeset: runc-debian-buster
+
+- project-template:
+    name: wazo-tox-py27
+    description: Project template for tox -e py27
+    check:
+      jobs:
+        - wazo-tox-py27:
+            nodeset: runc-debian-stretch
+    gate:
+      jobs:
+        - wazo-tox-py27:
+            nodeset: runc-debian-stretch
+    auto-merge:
+      jobs:
+        - wazo-tox-py27:
+            nodeset: runc-debian-stretch
+
+- project-template:
+    name: wazo-tox-integration
+    description: Project template for tox -e integration
+    check:
+      jobs:
+        - wazo-tox-integration:
+            nodeset: debian10-vm
+    gate:
+      jobs:
+        - wazo-tox-integration:
+            nodeset: debian10-vm
+    auto-merge:
+      jobs:
+        - wazo-tox-integration:
+            nodeset: debian10-vm
+
+- project-template:
+    name: molecule
+    description: Project template for tox -e molecule
+    check:
+      jobs:
+        - wazo-tox-molecule:
+            nodeset: debian10-vm
+    gate:
+      jobs:
+        - wazo-tox-molecule:
+            nodeset: debian10-vm
+    auto-merge:
+      jobs:
+        - wazo-tox-molecule:
+            nodeset: debian10-vm
+
+- project-template:
+    name: docker-build-template
+    description: Project template to build a Docker image
+    check:
+      jobs:
+        - docker-build:
+            nodeset: debian10-vm
+    gate:
+      jobs:
+        - docker-build:
+            nodeset: debian10-vm
+    auto-merge:
+      jobs:
+        - docker-build:
+            nodeset: debian10-vm
+
+- project-template:
+    name: wazo-c4-test-template
+    description: Project template to test wazo-c4
+    check:
+      jobs:
+        - wazo-c4-test:
+            nodeset: debian10-vm
+    gate:
+      jobs:
+        - wazo-c4-test:
+            nodeset: debian10-vm
+    auto-merge:
+      jobs:
+        - wazo-c4-test:
+            nodeset: debian10-vm
+
+- project-template:
+    name: wazo-c4-docker-build-test-template
+    description: Project template to build and test a C4 docker image
+    check:
+      jobs:
+        - wazo-c4-docker-build-test:
+            nodeset: debian10-vm
+            required-projects:
+              wazo-platform/wazo-c4
+    gate:
+      jobs:
+        - wazo-c4-docker-build-test:
+            nodeset: debian10-vm
+            required-projects:
+              wazo-platform/wazo-c4
+    auto-merge:
+      jobs:
+        - wazo-c4-docker-build-test:
+            nodeset: debian10-vm
+            required-projects:
+              wazo-platform/wazo-c4
+
+- project-template:
+    name: debian-packaging-template
+    description: Project template to build Debian packages
+    check:
+      jobs:
+        - debian-packaging:
+            nodeset: debian10-vm
+            required-projects:
+              wazo-platform/xivo-ci
+    gate:
+      jobs:
+        - debian-packaging:
+            nodeset: debian10-vm
+            required-projects:
+              wazo-platform/xivo-ci
+    auto-merge:
+      jobs:
+        - debian-packaging:
+            nodeset: debian10-vm
+            required-projects:
+              wazo-platform/xivo-ci
+    experimental:
+      jobs:
+        - wazo-ansible-uc-job:
+            nodeset: debian10-vm
+            required-projects:
+              wazo-platform/wazo-ansible
+
+- project-template:
+    name: yarn-template
+    description: Project template for yarn build
+    check:
+      jobs:
+        - yarn-build:
+            nodeset: runc-debian-buster
+    gate:
+      jobs:
+        - yarn-build:
+            nodeset: runc-debian-buster
+    auto-merge:
+      jobs:
+        - yarn-build:
+            nodeset: runc-debian-buster

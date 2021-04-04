@@ -1,0 +1,51 @@
+- name: Install build essential packages
+  become: yes
+  apt:
+    name:
+      - 'devscripts'
+      - 'dirmngr'
+      - 'build-essential'
+      - 'autopkgtest'
+      - 'aptitude'
+      # - 'piuparts'
+    update_cache: true
+    state: present
+  vars:
+    DEBIAN_FRONTEND: noninteractive
+
+- name: Import Wazo gpg key
+  become: yes
+  apt_key:
+    url: http://mirror.wazo.community/wazo_current.key
+    id: 2769B67EDBFF423F6874D7663F1BF7FC527FBC6A
+
+- name: Configure Wazo dev repository
+  become: yes
+  apt_repository:
+    repo: deb http://mirror.wazo.community/debian/ wazo-dev-buster main
+    state: present
+
+- name: Copy script to validate versions
+  copy:
+    src: scripts/check-versions.sh
+    dest: /tmp/check-versions.sh
+    mode: 0755
+
+- include_tasks: build-package.yaml
+  loop: "{{ zuul.get('items') }}"
+
+- name: Check if we have built Debian packages
+  stat:
+    path: "{{ zuul.project.src_dir }}/../pkgs"
+  register: pkgs
+
+- name: Install packages
+  # Use aptitude as it handles better the conflicts than apt but we
+  # need to check that the packages are really installed after the
+  # command as aptitude can be successful without installing anything
+  # (i.e. with a non-existing dependency).
+  shell: "set -x; pkgs=\"$(for p in ./*.deb; do dpkg-deb -f $p Package; done)\" && env DEBIAN_FRONTEND=noninteractive aptitude install -y $pkgs && dpkg -l $pkgs"
+  become: yes
+  args:
+    chdir: "{{ zuul.project.src_dir }}/../pkgs"
+  when: do_not_install_packages_after_build is not defined and pkgs.stat.isdir is defined and pkgs.stat.isdir
