@@ -89,11 +89,13 @@
 - job:
     name: yarn-build
     description: Run yarn build
+    parent: base
     run: playbooks/yarn-build/run.yaml
 
 - job:
     name: yarn-test
     description: Run yarn test
+    parent: base
     run: playbooks/yarn-test/run.yaml
 
 # - job:
