@@ -3,8 +3,8 @@
   yum:
     name: "{{ item }}"
     state: latest
-  with_items:
-  - rh-python35-dlrnapi-client
+  loop:
+  - dlrnapi-client
   become: true
 
 - name: Publish for each built tag

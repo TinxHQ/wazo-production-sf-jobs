@@ -153,6 +153,7 @@ class LogMatcher(object):
         # TODO(clarkb) can we do better without duplicated data here?
         fields["build_uuid"] = zuul['build']
         fields["build_short_uuid"] = fields["build_uuid"][:7]
+        fields["build_set"] = zuul["buildset"]
         # TODO: this should be build_pipeline
         fields["build_queue"] = zuul['pipeline']
         # TODO: this is not interesteding anymore
@@ -171,6 +172,7 @@ class LogMatcher(object):
             fields["node_provider"] = 'local'
         log_url = urllib.parse.urljoin(self.log_url, filename)
         fields["log_url"] = log_url
+        fields["tenant"] = zuul["tenant"]
         if 'executor' in zuul and 'hostname' in zuul['executor']:
             fields["zuul_executor"] = zuul['executor']['hostname']
         return fields
