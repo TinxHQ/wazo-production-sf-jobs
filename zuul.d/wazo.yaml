@@ -98,29 +98,29 @@
     parent: base
     run: playbooks/yarn-test/run.yaml
 
-# - job:
-#     name: wazo-acceptance-job
-#     description: install Wazo platform and run acceptance tests
-#     required-projects:
-#       - wazo-platform/wazo-ansible
-#       - wazo-platform/wazo-acceptance
-#       - wazo-platform/xivo-ci
-#     timeout: 10800
-#     pre-run: playbooks/wazo-acceptance/pre.yaml
-#     run: playbooks/wazo-acceptance/run.yaml
-#     post-run: playbooks/wazo-acceptance/fetch-logs.yaml
+- job:
+    name: wazo-acceptance-job
+    description: install Wazo platform and run acceptance tests
+    required-projects:
+      - wazo-platform/wazo-ansible
+      - wazo-platform/wazo-acceptance
+      - wazo-platform/xivo-ci
+    timeout: 10800
+    pre-run: playbooks/wazo-acceptance/pre.yaml
+    run: playbooks/wazo-acceptance/run.yaml
+    post-run: playbooks/wazo-acceptance/fetch-logs.yaml
 
-# - job:
-#     name: wazo-ansible-uc-job
-#     description: Install Wazo Platform UC use case
-#     timeout: 10800
-#     pre-run: playbooks/wazo-ansible/pre.yaml
-#     run: playbooks/wazo-ansible/run.yaml
-#     post-run: playbooks/wazo-ansible/fetch-logs.yaml
-#     vars:
-#       wazo_debian_repo: main
-#       wazo_distribution: wazo-dev-buster
-#     required-projects: wazo-platform/xivo-ci
+- job:
+    name: wazo-ansible-uc-job
+    description: Install Wazo Platform UC use case
+    timeout: 10800
+    pre-run: playbooks/wazo-ansible/pre.yaml
+    run: playbooks/wazo-ansible/run.yaml
+    post-run: playbooks/wazo-ansible/fetch-logs.yaml
+    vars:
+      wazo_debian_repo: main
+      wazo_distribution: wazo-dev-buster
+    required-projects: wazo-platform/xivo-ci
 
 - project-template:
     name: wazo-ansible-uc-template
@@ -297,29 +297,29 @@
             nodeset: vm-debian-10-m1s
             required-projects: wazo-platform/wazo-c4
 
-# - project-template:
-#     name: debian-packaging-template
-#     description: Project template to build Debian packages
-#     check:
-#       jobs:
-#         - debian-packaging:
-#             nodeset: vm-debian-10-m1s
-#             required-projects: wazo-platform/xivo-ci
-#     gate:
-#       jobs:
-#         - debian-packaging:
-#             nodeset: vm-debian-10-m1s
-#             required-projects: wazo-platform/xivo-ci
-#     auto-merge:
-#       jobs:
-#         - debian-packaging:
-#             nodeset: vm-debian-10-m1s
-#             required-projects: wazo-platform/xivo-ci
-#     experimental:
-#       jobs:
-#         - wazo-ansible-uc-job:
-#             nodeset: vm-debian-10-m1s
-#             required-projects: wazo-platform/wazo-ansible
+- project-template:
+    name: debian-packaging-template
+    description: Project template to build Debian packages
+    check:
+      jobs:
+        - debian-packaging:
+            nodeset: vm-debian-10-m1s
+            required-projects: wazo-platform/xivo-ci
+    gate:
+      jobs:
+        - debian-packaging:
+            nodeset: vm-debian-10-m1s
+            required-projects: wazo-platform/xivo-ci
+    auto-merge:
+      jobs:
+        - debian-packaging:
+            nodeset: vm-debian-10-m1s
+            required-projects: wazo-platform/xivo-ci
+    experimental:
+      jobs:
+        - wazo-ansible-uc-job:
+            nodeset: vm-debian-10-m1s
+            required-projects: wazo-platform/wazo-ansible
 
 - project-template:
     name: yarn-template
