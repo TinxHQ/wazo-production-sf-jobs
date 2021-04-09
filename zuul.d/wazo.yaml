@@ -1,9 +1,4 @@
-- nodeset:
-    name: pod-debian-9
-    nodes:
-      - label: pod-debian-9
-        name: pod-debian-9
-
+---
 - nodeset:
     name: pod-debian-10
     nodes:
@@ -15,6 +10,12 @@
     nodes:
       - label: pod-node-12
         name: pod-node-12
+
+- nodeset:
+    name: pod-python-27
+    nodes:
+      - label: pod-python-27
+        name: pod-python-27
 
 - nodeset:
     name: vm-debian-10-m1s
@@ -120,7 +121,8 @@
     vars:
       wazo_debian_repo: main
       wazo_distribution: wazo-dev-buster
-    required-projects: wazo-platform/xivo-ci
+    required-projects:
+      - wazo-platform/xivo-ci
 
 - project-template:
     name: wazo-ansible-uc-template
@@ -167,22 +169,6 @@
             nodeset: pod-debian-10
 
 - project-template:
-    name: wazo-tox-py35
-    description: Project template for tox -e py35
-    check:
-      jobs:
-        - wazo-tox-py35:
-            nodeset: pod-debian-9
-    gate:
-      jobs:
-        - wazo-tox-py35:
-            nodeset: pod-debian-9
-    auto-merge:
-      jobs:
-        - wazo-tox-py35:
-            nodeset: pod-debian-9
-
-- project-template:
     name: wazo-tox-linters
     description: Project template for tox -e linters
     check:
@@ -204,15 +190,15 @@
     check:
       jobs:
         - wazo-tox-py27:
-            nodeset: pod-debian-9
+            nodeset: pod-python-27
     gate:
       jobs:
         - wazo-tox-py27:
-            nodeset: pod-debian-9
+            nodeset: pod-python-27
     auto-merge:
       jobs:
         - wazo-tox-py27:
-            nodeset: pod-debian-9
+            nodeset: pod-python-27
 
 - project-template:
     name: wazo-tox-integration
