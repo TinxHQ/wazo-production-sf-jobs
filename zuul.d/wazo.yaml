@@ -29,6 +29,12 @@
       - label: vm-debian-10-m2s
         name: vm-debian-10-m2s
 
+- nodeset:
+    name: vm-debian-10-m1m
+    nodes:
+      - label: vm-debian-10-m1m
+        name: vm-debian-10-m1m
+
 - job:
     name: wazo-tox
     parent: tox
