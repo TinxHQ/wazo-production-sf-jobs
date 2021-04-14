@@ -1,0 +1,36 @@
+---
+- nodeset:
+    name: pod-debian-10
+    nodes:
+      - label: pod-debian-10
+        name: pod-debian-10
+
+- nodeset:
+    name: pod-node-12
+    nodes:
+      - label: pod-node-12
+        name: pod-node-12
+
+- nodeset:
+    name: pod-python-27
+    nodes:
+      - label: pod-python-27
+        name: pod-python-27
+
+- nodeset:
+    name: vm-debian-10-m1s
+    nodes:
+      - label: vm-debian-10-m1s
+        name: vm-debian-10-m1s
+
+- nodeset:
+    name: vm-debian-10-m2s
+    nodes:
+      - label: vm-debian-10-m2s
+        name: vm-debian-10-m2s
+
+- nodeset:
+    name: vm-debian-10-m1m
+    nodes:
+      - label: vm-debian-10-m1m
+        name: vm-debian-10-m1m

@@ -1,0 +1,95 @@
+---
+- job:
+    name: wazo-tox
+    parent: tox
+    description: |
+      Run tox
+
+      Like tox but
+      * install sibling packages in virtualenv for Depends-On too
+      * install sibling packages in docker compose environement for integration if enabled
+        with docker_install_siblings
+    run: playbooks/wazo-tox/run.yaml
+    post-run: playbooks/wazo-tox/post.yaml
+
+- job:
+    name: wazo-tox-molecule
+    parent: wazo-tox
+    vars:
+      tox_envlist: molecule
+
+- job:
+    name: wazo-tox-integration
+    parent: wazo-tox
+    vars:
+      docker_install_siblings: true
+      tox_envlist: integration
+    run: playbooks/wazo-tox-integration/run.yaml
+
+- job:
+    name: wazo-tox-py27
+    parent: wazo-tox
+    vars:
+      tox_envlist: py27
+
+- job:
+    name: wazo-tox-py37
+    parent: wazo-tox
+    vars:
+      tox_envlist: py37
+
+- job:
+    name: debian-packaging
+    run: playbooks/debian-packaging/run.yaml
+    provides: repo
+
+- job:
+    name: docker-build
+    run: playbooks/docker-build/run.yaml
+
+- job:
+    name: wazo-c4-docker-build-test
+    run: playbooks/wazo-c4-docker-build-test/run.yaml
+    post-run: playbooks/wazo-c4-test/fetch-logs.yaml
+
+- job:
+    name: wazo-c4-test
+    run: playbooks/wazo-c4-test/run.yaml
+    post-run: playbooks/wazo-c4-test/fetch-logs.yaml
+
+- job:
+    name: yarn-build
+    description: Run yarn build
+    parent: base
+    run: playbooks/yarn-build/run.yaml
+
+- job:
+    name: yarn-test
+    description: Run yarn test
+    parent: base
+    run: playbooks/yarn-test/run.yaml
+
+- job:
+    name: wazo-acceptance-job
+    description: install Wazo platform and run acceptance tests
+    required-projects:
+      - wazo-platform/wazo-ansible
+      - wazo-platform/wazo-acceptance
+      - wazo-platform/xivo-ci
+    timeout: 10800
+    pre-run: playbooks/wazo-acceptance/pre.yaml
+    run: playbooks/wazo-acceptance/run.yaml
+    post-run: playbooks/wazo-acceptance/fetch-logs.yaml
+
+- job:
+    name: wazo-ansible-uc-job
+    description: Install Wazo Platform UC use case
+    timeout: 10800
+    pre-run: playbooks/wazo-ansible/pre.yaml
+    run: playbooks/wazo-ansible/run.yaml
+    post-run: playbooks/wazo-ansible/fetch-logs.yaml
+    vars:
+      wazo_debian_repo: main
+      wazo_distribution: wazo-dev-buster
+    required-projects:
+      - wazo-platform/xivo-ci
