@@ -4,44 +4,23 @@
     description: Project template to test the UC installer
     check:
       jobs:
-        - wazo-ansible-uc-job:
-            nodeset: vm-debian-10-m1s
+        - wazo-ansible-uc
     gate:
       jobs:
-        - wazo-ansible-uc-job:
-            nodeset: vm-debian-10-m1s
-
-- project-template:
-    name: wazo-tox-py37-vm
-    description: Project template for tox -e py37
-    check:
-      jobs:
-        - wazo-tox-py37:
-            nodeset: vm-debian-10-m1s
-    gate:
-      jobs:
-        - wazo-tox-py37:
-            nodeset: vm-debian-10-m1s
-    auto-merge:
-      jobs:
-        - wazo-tox-py37:
-            nodeset: vm-debian-10-m1s
+        - wazo-ansible-uc
 
 - project-template:
     name: wazo-tox-py37
     description: Project template for tox -e py37
     check:
       jobs:
-        - wazo-tox-py37:
-            nodeset: pod-debian-10
+        - wazo-tox-py37
     gate:
       jobs:
-        - wazo-tox-py37:
-            nodeset: pod-debian-10
+        - wazo-tox-py37
     auto-merge:
       jobs:
-        - wazo-tox-py37:
-            nodeset: pod-debian-10
+        - wazo-tox-py37
 
 - project-template:
     name: wazo-tox-linters
@@ -64,48 +43,39 @@
     description: Project template for tox -e py27
     check:
       jobs:
-        - wazo-tox-py27:
-            nodeset: pod-python-27
+        - wazo-tox-py27
     gate:
       jobs:
-        - wazo-tox-py27:
-            nodeset: pod-python-27
+        - wazo-tox-py27
     auto-merge:
       jobs:
-        - wazo-tox-py27:
-            nodeset: pod-python-27
+        - wazo-tox-py27
 
 - project-template:
     name: wazo-tox-integration
     description: Project template for tox -e integration
     check:
       jobs:
-        - wazo-tox-integration:
-            nodeset: vm-debian-10-m1s
+        - wazo-tox-integration
     gate:
       jobs:
-        - wazo-tox-integration:
-            nodeset: vm-debian-10-m1s
+        - wazo-tox-integration
     auto-merge:
       jobs:
-        - wazo-tox-integration:
-            nodeset: vm-debian-10-m1s
+        - wazo-tox-integration
 
 - project-template:
     name: molecule
     description: Project template for tox -e molecule
     check:
       jobs:
-        - wazo-tox-molecule:
-            nodeset: vm-debian-10-m1s
+        - wazo-tox-molecule
     gate:
       jobs:
-        - wazo-tox-molecule:
-            nodeset: vm-debian-10-m1s
+        - wazo-tox-molecule
     auto-merge:
       jobs:
-        - wazo-tox-molecule:
-            nodeset: vm-debian-10-m1s
+        - wazo-tox-molecule
 
 - project-template:
     name: docker-build-template
@@ -128,88 +98,62 @@
     description: Project template to test wazo-c4
     check:
       jobs:
-        - wazo-c4-test:
-            nodeset: vm-debian-10-m1s
+        - wazo-c4-test
     gate:
       jobs:
-        - wazo-c4-test:
-            nodeset: vm-debian-10-m1s
+        - wazo-c4-test
     auto-merge:
       jobs:
-        - wazo-c4-test:
-            nodeset: vm-debian-10-m1s
+        - wazo-c4-test
 
 - project-template:
     name: wazo-c4-docker-build-test-template
     description: Project template to build and test a C4 docker image
     check:
       jobs:
-        - wazo-c4-docker-build-test:
-            nodeset: vm-debian-10-m1s
-            required-projects: wazo-platform/wazo-c4
+        - wazo-c4-docker-build-test
     gate:
       jobs:
-        - wazo-c4-docker-build-test:
-            nodeset: vm-debian-10-m1s
-            required-projects: wazo-platform/wazo-c4
+        - wazo-c4-docker-build-test
     auto-merge:
       jobs:
-        - wazo-c4-docker-build-test:
-            nodeset: vm-debian-10-m1s
-            required-projects: wazo-platform/wazo-c4
+        - wazo-c4-docker-build-test
 
 - project-template:
     name: debian-packaging-template
     description: Project template to build Debian packages
     check:
       jobs:
-        - debian-packaging:
-            nodeset: vm-debian-10-m1s
-            required-projects: wazo-platform/xivo-ci
+        - debian-packaging
     gate:
       jobs:
-        - debian-packaging:
-            nodeset: vm-debian-10-m1s
-            required-projects: wazo-platform/xivo-ci
+        - debian-packaging
     auto-merge:
       jobs:
-        - debian-packaging:
-            nodeset: vm-debian-10-m1s
-            required-projects: wazo-platform/xivo-ci
-    experimental:
-      jobs:
-        - wazo-ansible-uc-job:
-            nodeset: vm-debian-10-m1s
-            required-projects: wazo-platform/wazo-ansible
+        - debian-packaging
 
 - project-template:
     name: yarn-build
     description: Project template for yarn build
     check:
       jobs:
-        - yarn-build:
-            nodeset: pod-node-12
+        - yarn-build
     gate:
       jobs:
-        - yarn-build:
-            nodeset: pod-node-12
+        - yarn-build
     auto-merge:
       jobs:
-        - yarn-build:
-            nodeset: pod-node-12
+        - yarn-build
 
 - project-template:
     name: yarn-test
     description: Project template for yarn test
     check:
       jobs:
-        - yarn-test:
-            nodeset: pod-node-12
+        - yarn-test
     gate:
       jobs:
-        - yarn-test:
-            nodeset: pod-node-12
+        - yarn-test
     auto-merge:
       jobs:
-        - yarn-test:
-            nodeset: pod-node-12
+        - yarn-test

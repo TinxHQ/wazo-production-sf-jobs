@@ -17,6 +17,7 @@
     parent: wazo-tox
     vars:
       tox_envlist: molecule
+    nodeset: vm-debian-10-m1s
 
 - job:
     name: wazo-tox-integration
@@ -32,17 +33,22 @@
     parent: wazo-tox
     vars:
       tox_envlist: py27
+    nodeset: pod-python-27
 
 - job:
     name: wazo-tox-py37
     parent: wazo-tox
     vars:
       tox_envlist: py37
+    nodeset: pod-debian-10
 
 - job:
     name: debian-packaging
     run: playbooks/debian-packaging/run.yaml
     provides: repo
+    nodeset: vm-debian-10-m1s
+    required-projects:
+      - wazo-platform/xivo-ci
 
 - job:
     name: docker-build
@@ -52,23 +58,29 @@
     name: wazo-c4-docker-build-test
     run: playbooks/wazo-c4-docker-build-test/run.yaml
     post-run: playbooks/wazo-c4-test/fetch-logs.yaml
+    nodeset: vm-debian-10-m1s
+    required-projects:
+      - wazo-platform/wazo-c4
 
 - job:
     name: wazo-c4-test
     run: playbooks/wazo-c4-test/run.yaml
     post-run: playbooks/wazo-c4-test/fetch-logs.yaml
+    nodeset: vm-debian-10-m1s
 
 - job:
     name: yarn-build
     description: Run yarn build
     parent: base
     run: playbooks/yarn-build/run.yaml
+    nodeset: pod-node-12
 
 - job:
     name: yarn-test
     description: Run yarn test
     parent: base
     run: playbooks/yarn-test/run.yaml
+    nodeset: pod-node-12
 
 - job:
     name: wazo-acceptance-job
@@ -81,9 +93,10 @@
     pre-run: playbooks/wazo-acceptance/pre.yaml
     run: playbooks/wazo-acceptance/run.yaml
     post-run: playbooks/wazo-acceptance/fetch-logs.yaml
+    nodeset: vm-debian-10-m1m
 
 - job:
-    name: wazo-ansible-uc-job
+    name: wazo-ansible-uc
     description: Install Wazo Platform UC use case
     timeout: 10800
     pre-run: playbooks/wazo-ansible/pre.yaml
@@ -94,3 +107,4 @@
       wazo_distribution: wazo-dev-buster
     required-projects:
       - wazo-platform/xivo-ci
+    nodeset: vm-debian-10-m1s
