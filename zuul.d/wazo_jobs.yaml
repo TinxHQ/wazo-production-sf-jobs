@@ -25,6 +25,7 @@
       docker_install_siblings: true
       tox_envlist: integration
     run: playbooks/wazo-tox-integration/run.yaml
+    nodeset: vm-debian-10-m1s
 
 - job:
     name: wazo-tox-py27
