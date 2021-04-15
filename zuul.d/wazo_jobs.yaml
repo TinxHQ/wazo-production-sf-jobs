@@ -83,7 +83,7 @@
     nodeset: pod-node-12
 
 - job:
-    name: wazo-acceptance-job
+    name: wazo-acceptance
     description: install Wazo platform and run acceptance tests
     required-projects:
       - wazo-platform/wazo-ansible
