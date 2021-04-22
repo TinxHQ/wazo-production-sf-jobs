@@ -24,8 +24,8 @@
   command: "python3 setup.py --name"
   args:
     chdir: "{{ zuul_work_dir }}"
-  register: python_package_name
   when: check_setup_py_file.stat.exists
+  register: python_package_name
 
 - name: Install any sibling python packages
   tox_install_sibling_packages:
