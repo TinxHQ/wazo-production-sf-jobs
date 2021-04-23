@@ -1,36 +1,34 @@
 ---
 - hosts: all
+  become: yes
   tasks:
-
     - name: Upload logs
-      become: yes
       synchronize:
-        src: '/var/log'
-        dest: '{{ zuul.executor.log_root }}'
+        src: "/var/log"
+        dest: "{{ zuul.executor.log_root }}"
         mode: pull
         copy_links: true
         verify_host: true
         rsync_opts: []
 
     - name: Upload configuration
-      become: yes
       synchronize:
-        src: '/etc'
-        dest: '{{ zuul.executor.log_root }}'
+        src: "/etc"
+        dest: "{{ zuul.executor.log_root }}"
         mode: pull
         copy_links: true
         verify_host: true
-        rsync_opts: []
+        rsync_opts:
+          # broken symlink causing rsync return code 23
+          - "--exclude='/etc/mail/smrsh/mail.local'"
 
     - name: Get some commands output
-      become: yes
       script: collect_commands.sh
 
     - name: Upload commands
-      become: yes
       synchronize:
-        src: '/tmp/commands'
-        dest: '{{ zuul.executor.log_root }}'
+        src: "/tmp/commands"
+        dest: "{{ zuul.executor.log_root }}"
         mode: pull
         copy_links: true
         verify_host: true
