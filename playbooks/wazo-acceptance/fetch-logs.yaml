@@ -18,9 +18,9 @@
         mode: pull
         copy_links: true
         verify_host: true
-        rsync_opts:
-          # broken symlink causing rsync return code 23
-          - "--exclude='/etc/mail/smrsh/mail.local'"
+        rsync_opts: []
+      # broken symlink cause rsync return code 23
+      ignore_errors: yes
 
     - name: Get some commands output
       script: collect_commands.sh
