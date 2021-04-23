@@ -79,6 +79,7 @@
     name: yarn-test
     description: Run yarn test
     parent: base
+    timeout: 10800
     run: playbooks/yarn-test/run.yaml
     nodeset: pod-node-12
 
