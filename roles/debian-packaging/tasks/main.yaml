@@ -22,7 +22,7 @@
 - name: Configure Wazo dev repository
   become: yes
   apt_repository:
-    repo: deb http://mirror.wazo.community/debian/ wazo-dev-buster main
+    repo: "deb http://mirror.wazo.community/debian/ {{ wazo_distribution }} main"
     state: present
 
 - name: Copy script to validate versions
