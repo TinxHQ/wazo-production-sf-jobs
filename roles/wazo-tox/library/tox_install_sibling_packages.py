@@ -14,7 +14,24 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this software.  If not, see <http://www.gnu.org/licenses/>.
+
+# origin: https://opendev.org/zuul/zuul-jobs/src/branch/master/roles/tox/library/tox_install_sibling_packages.py  # noqa
+# It is unpachted, except for black and linter
+
 from __future__ import absolute_import, division, print_function
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
+
+import os
+import ast
+import subprocess
+import tempfile
+import traceback
+
+from ansible.module_utils.basic import AnsibleModule
+
 __metaclass__ = type
 
 DOCUMENTATION = '''
@@ -46,19 +63,6 @@ options:
     required: true
     type: list
 '''
-
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-
-import os
-import ast
-import subprocess
-import tempfile
-import traceback
-
-from ansible.module_utils.basic import AnsibleModule
 
 log = list()
 
@@ -177,8 +181,7 @@ def find_installed_siblings(tox_python, package_name, sibling_python_packages):
         log.append(
             "Found {name} python package installed".format(
                 name=dep_name))
-        if (dep_name == package_name or
-            to_filename(dep_name) == package_name):
+        if (dep_name == package_name or to_filename(dep_name) == package_name):
             # We don't need to re-process ourself.
             # We've filtered ourselves from the source dir list,
             # but let's be sure nothing is weird.
@@ -310,7 +313,8 @@ def main():
 
     log.append('Using envlist: {}'.format(envlist))
 
-    if (not tox_package_name
+    if (
+        not tox_package_name
         and not os.path.exists(os.path.join(project_dir, 'setup.cfg'))
     ):
         module.exit_json(changed=False, msg="No setup.cfg, no action needed")
