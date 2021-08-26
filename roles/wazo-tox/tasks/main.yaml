@@ -57,13 +57,20 @@
 - name: Set the integration environment variables
   set_fact:
     integration_env:
+      INTEGRATION_TEST_TIMEOUT: "{{ integration_test_timeout | default(omit) }}"
+      MANAGE_DB_DIR: "{{ zuul.projects.values() | list | json_query(manage_db_query) | first | default('') }}"
+      TEST_LOGS: "verbose"
       WAZO_TEST_DOCKER_LOGS_ENABLED: 1
       WAZO_TEST_NO_DOCKER_COMPOSE_PULL: 1
       WAZO_TEST_DOCKER_LOGS_DIR: "/tmp/docker-logs"
-      TEST_LOGS: "verbose"
-      INTEGRATION_TEST_TIMEOUT: "{{ integration_test_timeout | default(omit) }}"
-      TOX_TESTENV_PASSENV: "INTEGRATION_TEST_TIMEOUT WAZO_TEST_DOCKER_LOGS_DIR WAZO_TEST_DOCKER_LOGS_ENABLED WAZO_TEST_DOCKER_OVERRIDE_EXTRA WAZO_TEST_NO_DOCKER_COMPOSE_PULL TEST_LOGS"
-      MANAGE_DB_DIR: "{{ zuul.projects.values() | list | json_query(manage_db_query) | first | default('') }}"
+      TOX_TESTENV_PASSENV: >-
+        INTEGRATION_TEST_TIMEOUT
+        MANAGE_DB_DIR
+        TEST_LOGS
+        WAZO_TEST_DOCKER_LOGS_DIR
+        WAZO_TEST_DOCKER_LOGS_ENABLED
+        WAZO_TEST_DOCKER_OVERRIDE_EXTRA
+        WAZO_TEST_NO_DOCKER_COMPOSE_PULL
   vars:
     manage_db_query: "[?short_name=='xivo-manage-db'].src_dir"
 
@@ -72,6 +79,18 @@
     msg: "Docker compose override file contents: {{ docker_sibling_results.contents }}"
   when: docker_install_siblings
 
+- name: Set tox environment variables
+  set_fact:
+    tox_environment: "{{ tox_environment | combine(item) }}"
+  loop:
+    - "{{ docker_compose_override_env | default({}) }}"
+    - "{{ tox_constraints_env | default({}) }}"
+    - "{{ integration_env | default({}) }}"
+
+- name: Emit tox environment
+  debug:
+    var: tox_environment
+
 - name: Emit tox command
   debug:
     msg: "Running tox: {{ tox_executable }} -e{{ tox_envlist }} {{ tox_extra_args }}"
@@ -79,6 +98,5 @@
 - name: Run tox
   args:
     chdir: "{{ zuul_work_dir }}"
-  # yamllint disable-line rule:line-length
-  environment: "{{ tox_environment|combine(docker_compose_override_env|default({}))|combine(tox_constraints_env|default({}))|combine(integration_env|default({})) }}"
+  environment: "{{ tox_environment }}"
   command: "{{ tox_executable }} -e{{ tox_envlist }} {{ tox_extra_args }}"
