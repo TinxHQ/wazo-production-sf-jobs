@@ -21,6 +21,9 @@
     auto-merge:
       jobs:
         - wazo-tox-py37
+    self-approve:
+      jobs:
+        - noop
 
 - project-template:
     name: wazo-tox-linters
@@ -37,6 +40,9 @@
       jobs:
         - tox-linters:
             nodeset: pod-debian-10
+    self-approve:
+      jobs:
+        - noop
 
 - project-template:
     name: wazo-tox-py27
@@ -50,6 +56,9 @@
     auto-merge:
       jobs:
         - wazo-tox-py27
+    self-approve:
+      jobs:
+        - noop
 
 - project-template:
     name: wazo-tox-integration
@@ -63,6 +72,9 @@
     auto-merge:
       jobs:
         - wazo-tox-integration
+    self-approve:
+      jobs:
+        - noop
 
 - project-template:
     name: molecule
@@ -76,6 +88,9 @@
     auto-merge:
       jobs:
         - wazo-tox-molecule
+    self-approve:
+      jobs:
+        - noop
 
 - project-template:
     name: docker-build-template
@@ -92,6 +107,9 @@
       jobs:
         - docker-build:
             nodeset: vm-debian-10-m1s
+    self-approve:
+      jobs:
+        - noop
 
 - project-template:
     name: wazo-c4-test-template
@@ -105,6 +123,9 @@
     auto-merge:
       jobs:
         - wazo-c4-test
+    self-approve:
+      jobs:
+        - noop
 
 - project-template:
     name: wazo-c4-docker-build-test-template
@@ -118,6 +139,9 @@
     auto-merge:
       jobs:
         - wazo-c4-docker-build-test
+    self-approve:
+      jobs:
+        - noop
 
 - project-template:
     name: debian-packaging-template
@@ -144,6 +168,9 @@
     auto-merge:
       jobs:
         - yarn-build
+    self-approve:
+      jobs:
+        - noop
 
 - project-template:
     name: yarn-test
@@ -157,3 +184,6 @@
     auto-merge:
       jobs:
         - yarn-test
+    self-approve:
+      jobs:
+        - noop
