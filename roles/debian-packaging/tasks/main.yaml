@@ -22,8 +22,9 @@
 - name: Configure Wazo dev repository
   become: yes
   apt_repository:
-    repo: "deb http://mirror.wazo.community/debian/ {{ wazo_distribution }} main"
+    repo: "deb http://mirror.wazo.community/debian/ {{ item }} main"
     state: present
+  loop: "{{ wazo_distributions | default([wazo_distribution]) }}"
 
 - name: Copy script to validate versions
   copy:
