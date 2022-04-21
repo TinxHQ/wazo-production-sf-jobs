@@ -70,4 +70,9 @@
         state: present
       become: yes
 
+    - name: Remove *.tar* files
+      shell: "rm -f ../*.tar*"
+      args:
+        chdir: "{{ ansible_env.HOME }}/{{ item.project.src_dir }}"
+
   when: debian_pkg.stat.exists and (item.project.short_name != 'xivo-ci' or zuul.project.short_name == 'xivo-ci')
