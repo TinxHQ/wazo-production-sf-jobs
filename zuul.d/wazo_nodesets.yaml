@@ -36,8 +36,8 @@
         name: vm-debian-10-m1m
 
 # openstack2 nodeset config
-- nodeset:
-    name: vm-ubuntu-10-ubnt1
-    nodes:
-      - label: vm-ubuntu-10-ubnt1
-        name: vm-ubuntu-10-ubnt1
+# - nodeset:
+#     name: vm-ubuntu-10-ubnt1
+#     nodes:
+#       - label: vm-ubuntu-10-ubnt1
+#         name: vm-ubuntu-10-ubnt1

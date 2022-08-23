@@ -81,9 +81,9 @@
     parent: base
     timeout: 10800
     run: playbooks/yarn-test/run.yaml
-    # nodeset: pod-node-12 <- old config
+    nodeset: pod-node-12
     #openstack2 nodeset config for test job
-    nodeset: vm-ubuntu-10-ubnt1
+    # nodeset: vm-ubuntu-10-ubnt1
 
 - job:
     name: wazo-acceptance
