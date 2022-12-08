@@ -35,6 +35,6 @@
         chdir: "{{ zuul.project.src_dir }}/../wazo-acceptance"
 
     - name: Run acceptance tests
-      shell: "tox -e behave -- features/daily"
+      shell: "tox -e behave -- --no-capture --no-color features/daily"
       args:
         chdir: "{{ zuul.project.src_dir }}/../wazo-acceptance"
