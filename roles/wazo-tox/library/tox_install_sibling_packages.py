@@ -339,15 +339,16 @@ def main():
 
     changed = False
     for testenv in envlist:
-        envdir = tox_config.get("testenv:{}".format(testenv), 'envdir')
-        envlogdir = tox_config.get("testenv:{}".format(testenv), 'envlogdir')
+        env_dir = tox_config.get("testenv:{}".format(testenv), 'env_dir')
+        env_log_dir = tox_config.get("testenv:{}".format(testenv), 'env_log_dir')
         try:
             # Write a log file into the .tox dir so that it'll get picked up
             # Name it with testenv as a prefix so that fetch-tox-output
             # will properly get it in a multi-env scenario
-            log_file = '{envlogdir}/{testenv}-siblings.txt'.format(
-                envlogdir=envlogdir, testenv=testenv)
-            changed = changed or install_siblings(envdir,
+            log_file = '{env_log_dir}/{test_env}-siblings.txt'.format(
+                env_log_dir=env_log_dir, test_env=testenv
+            )
+            changed = changed or install_siblings(env_dir,
                                                   projects,
                                                   package_name,
                                                   constraints)
