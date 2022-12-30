@@ -18,6 +18,12 @@
         name: pod-python-27
 
 - nodeset:
+    name: pod-python-310
+    nodes:
+      - label: pod-python-310
+        name: pod-python-310
+
+- nodeset:
     name: vm-debian-10-m1s
     nodes:
       - label: vm-debian-10-m1s
@@ -34,10 +40,3 @@
     nodes:
       - label: vm-debian-10-m1m
         name: vm-debian-10-m1m
-
-# openstack2 nodeset config
-# - nodeset:
-#     name: vm-ubuntu-10-ubnt1
-#     nodes:
-#       - label: vm-ubuntu-10-ubnt1
-#         name: vm-ubuntu-10-ubnt1
