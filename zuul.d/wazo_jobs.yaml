@@ -29,13 +29,6 @@
     nodeset: vm-debian-10-m1s
 
 - job:
-    name: wazo-tox-py27
-    parent: wazo-tox
-    vars:
-      tox_envlist: py27
-    nodeset: pod-python-27
-
-- job:
     name: wazo-tox-py37
     parent: wazo-tox
     vars:
