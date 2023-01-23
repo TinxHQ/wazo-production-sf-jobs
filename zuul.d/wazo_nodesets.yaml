@@ -12,12 +12,6 @@
         name: pod-node-12
 
 - nodeset:
-    name: pod-python-27
-    nodes:
-      - label: pod-python-27
-        name: pod-python-27
-
-- nodeset:
     name: pod-python-310
     nodes:
       - label: pod-python-310
