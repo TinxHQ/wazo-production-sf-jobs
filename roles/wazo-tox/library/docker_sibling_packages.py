@@ -61,6 +61,11 @@ def main():
             "/opt/venv/lib/python3.7/site-packages/{package}".format(
                 root=os.path.realpath(root), package=package
             ))
+        volumes.add(
+            "{root}/{package}:"
+            "/opt/venv/lib/python3.9/site-packages/{package}".format(
+                root=os.path.realpath(root), package=package
+            ))
 
     version = '3'
     compose_file = (
