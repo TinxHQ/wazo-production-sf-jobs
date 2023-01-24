@@ -29,6 +29,15 @@
     nodeset: vm-debian-10-m1s
 
 - job:
+    name: wazo-tox-integration-py39
+    parent: wazo-tox
+    vars:
+      docker_install_siblings: true
+      tox_envlist: integration
+    run: playbooks/wazo-tox-integration/run.yaml
+    nodeset: vm-debian-11-m1s
+
+- job:
     name: wazo-tox-py37
     parent: wazo-tox
     vars:
@@ -36,10 +45,25 @@
     nodeset: pod-debian-10
 
 - job:
+    name: wazo-tox-py39
+    parent: wazo-tox
+    vars:
+      tox_envlist: py39
+    nodeset: pod-debian-11
+
+- job:
     name: debian-packaging
     run: playbooks/debian-packaging/run.yaml
     provides: repo
     nodeset: vm-debian-10-m1s
+    required-projects:
+      - wazo-platform/xivo-ci
+
+- job:
+    name: debian-packaging-bullseye
+    run: playbooks/debian-packaging/run.yaml
+    provides: repo
+    nodeset: vm-debian-11-m1s
     required-projects:
       - wazo-platform/xivo-ci
 
