@@ -3,6 +3,25 @@
     msg: tox_envlist is required for this role
   when: tox_envlist is not defined
 
+- name: Check to see if requirements file exists
+  stat:
+    path: "{{ zuul_work_dir}}/{{ item }}"
+  register: requirements_files
+  loop:
+    - requirements.txt
+    - integration_tests/test-requirements.txt
+    - integration_tests/test-requirements-for-tox.txt
+  ignore_errors: True
+
+- name: Replace requirements by predefined base branch (bullseye / bookworm)
+  ansible.builtin.lineinfile:
+    path: "{{ item.stat.path }}"
+    regexp: ^(.*)/master.zip
+    line: \1/{{ zuul.branch }}.zip
+    backrefs: yes
+  loop: "{{ requirements_files.results }}"
+  when: "'{{ zuul.branch }}' in ['bullseye', 'bookworm'] and {{ item }}.stat.exists"
+
 - name: Run tox without tests
   command: "{{ tox_executable }} --notest -e{{ tox_envlist }}"
   args:
