@@ -14,11 +14,10 @@
   ignore_errors: True
 
 - name: Replace requirements by predefined base branch (bullseye / bookworm)
-  ansible.builtin.lineinfile:
+  ansible.builtin.replace:
     path: "{{ item.stat.path }}"
-    regexp: ^(.*)/master.zip
-    line: \1/{{ zuul.branch }}.zip
-    backrefs: yes
+    regexp: /master\.zip
+    replace: /{{ zuul.branch }}.zip
   loop: "{{ requirements_files.results }}"
   when: "'{{ zuul.branch }}' in ['bullseye', 'bookworm'] and {{ item }}.stat.exists"
 
