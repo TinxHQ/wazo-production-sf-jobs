@@ -19,6 +19,11 @@
     url: http://mirror.wazo.community/wazo_current.key
     id: 2769B67EDBFF423F6874D7663F1BF7FC527FBC6A
 
+- name: Use different default wazo_distribution if bullseye
+  ansible.builtin.set_fact:
+    wazo_distribution: wazo-dev-wip-bullseye
+  when: zuul.branch == 'bullseye'
+
 - name: Configure Wazo dev repository
   become: yes
   apt_repository:
