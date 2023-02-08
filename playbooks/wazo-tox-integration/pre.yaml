@@ -1,7 +1,0 @@
----
-- hosts: all
-  tasks:
-    - name: Update package lists (workaround for bindep role)
-      apt:
-        update_cache: true
-      become: yes
