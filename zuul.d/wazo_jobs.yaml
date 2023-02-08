@@ -34,6 +34,7 @@
     vars:
       docker_install_siblings: true
       tox_envlist: integration
+    pre-run: playbooks/wazo-tox-integration/pre.yaml
     run: playbooks/wazo-tox-integration/run.yaml
     nodeset: vm-debian-11-m1s
 
