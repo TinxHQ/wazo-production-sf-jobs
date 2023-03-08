@@ -46,3 +46,9 @@
     nodes:
       - label: vm-debian-10-m1m
         name: vm-debian-10-m1m
+
+- nodeset:
+    name: vm-debian-11-m1m
+    nodes:
+      - label: vm-debian-11-m1m
+        name: vm-debian-11-m1m

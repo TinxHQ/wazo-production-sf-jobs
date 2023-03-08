@@ -10,6 +10,16 @@
         - wazo-ansible-uc
 
 - project-template:
+    name: wazo-ansible-uc-bullseye
+    description: Project template to test the UC installer
+    check:
+      jobs:
+        - wazo-ansible-uc-bullseye
+    gate:
+      jobs:
+        - wazo-ansible-uc-bullseye
+
+- project-template:
     name: wazo-tox-py37
     description: Project template for tox -e py37
     check:
