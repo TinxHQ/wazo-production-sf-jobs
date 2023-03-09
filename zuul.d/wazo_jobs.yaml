@@ -20,6 +20,13 @@
     nodeset: vm-debian-10-m1s
 
 - job:
+    name: wazo-tox-molecule-bullseye
+    parent: wazo-tox
+    vars:
+      tox_envlist: molecule
+    nodeset: vm-debian-11-m1s
+
+- job:
     name: wazo-tox-integration
     parent: wazo-tox
     vars:
@@ -116,6 +123,19 @@
     nodeset: vm-debian-10-m1m
 
 - job:
+    name: wazo-acceptance-bullseye
+    description: install Wazo platform and run acceptance tests on Bullseye
+    required-projects:
+      - wazo-platform/wazo-ansible
+      - wazo-platform/wazo-acceptance
+      - wazo-platform/xivo-ci
+    timeout: 10800
+    pre-run: playbooks/wazo-acceptance/pre.yaml
+    run: playbooks/wazo-acceptance/run.yaml
+    post-run: playbooks/wazo-acceptance/fetch-logs.yaml
+    nodeset: vm-debian-11-m1m
+
+- job:
     name: wazo-ansible-uc
     description: Install Wazo Platform UC use case
     timeout: 10800
@@ -128,3 +148,17 @@
     required-projects:
       - wazo-platform/xivo-ci
     nodeset: vm-debian-10-m1s
+
+- job:
+    name: wazo-ansible-uc-bullseye
+    description: Install Wazo Platform UC use case
+    timeout: 10800
+    pre-run: playbooks/wazo-ansible/pre.yaml
+    run: playbooks/wazo-ansible/run.yaml
+    post-run: playbooks/wazo-ansible/fetch-logs.yaml
+    vars:
+      wazo_debian_repo: main
+      wazo_distribution: wazo-dev-wip-bullseye
+    required-projects:
+      - wazo-platform/xivo-ci
+    nodeset: vm-debian-11-m1s
