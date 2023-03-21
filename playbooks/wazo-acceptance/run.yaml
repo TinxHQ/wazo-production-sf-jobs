@@ -9,8 +9,8 @@
       become: yes
       command: >
           ansible-playbook -i inventories/uc-engine uc-engine.yml
-          --extra-vars wazo_distribution=wazo-dev-buster
-          --extra-vars wazo_distribution_upgrade=wazo-dev-buster
+          --extra-vars wazo_distribution={{ wazo_distribution | default('wazo-dev-buster') }}
+          --extra-vars wazo_distribution_upgrade={{ wazo_distribution_upgrade | default('wazo-dev-buster') }}
       args:
         chdir: "{{ zuul.project.src_dir }}/../wazo-ansible"
 
