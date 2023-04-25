@@ -10,16 +10,28 @@
 
 - name: Build block
   block:
+    - name: Copy directory for building dependencies
+      copy:
+        remote_src: true
+        src: "{{ ansible_env.HOME }}/{{ item.project.src_dir }}/"
+        dest: "{{ ansible_env.HOME }}/{{ item.project.src_dir }}-build-deps/"
+
     - name: Install build dependencies
       become: yes
       command: mk-build-deps --install --remove --tool='env DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends --yes' debian/control
       vars:
         DEBIAN_FRONTEND: noninteractive
       args:
-        chdir: "{{ ansible_env.HOME }}/{{ item.project.src_dir }}"
+        chdir: "{{ ansible_env.HOME }}/{{ item.project.src_dir }}-build-deps"
 
     - name: Download orig sources if needed or update changelog
-      shell: "if grep -q get-orig-source debian/rules; then debian/rules get-orig-source; tar xvf ../*.tar* --strip 1 --exclude 'debian/*'; else dch -b -v $(../xivo-ci/bin/wazo-package-version $(wget -q -O - http://mirror.wazo.community/version/unstable)) --distribution $distribution --force-distribution \"$(git log -1 HEAD --pretty=format:%s)\"; fi"
+      shell: |
+        if grep -q get-orig-source debian/rules; then
+          debian/rules get-orig-source;
+          tar xvf ../*.tar* --strip 1 --exclude 'debian/*';
+        else
+          dch -b -v $(../xivo-ci/bin/wazo-package-version $(wget -q -O - http://mirror.wazo.community/version/unstable)) --distribution $distribution --force-distribution \"$(git log -1 HEAD --pretty=format:%s)\";
+        fi
       args:
         chdir: "{{ ansible_env.HOME }}/{{ item.project.src_dir }}"
 
@@ -74,5 +86,10 @@
       shell: "rm -f ../*.tar*"
       args:
         chdir: "{{ ansible_env.HOME }}/{{ item.project.src_dir }}"
+
+    - name: Remove build deps directory
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/{{ item.project.src_dir }}-build-deps"
+        state: absent
 
   when: debian_pkg.stat.exists and (item.project.short_name != 'xivo-ci' or zuul.project.short_name == 'xivo-ci')
