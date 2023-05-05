@@ -20,19 +20,6 @@
         - wazo-ansible-uc-bullseye
 
 - project-template:
-    name: wazo-tox-py37
-    description: Project template for tox -e py37
-    wazo-check:
-      jobs:
-        - wazo-tox-py37
-    wazo-gate:
-      jobs:
-        - wazo-tox-py37
-    auto-merge:
-      jobs:
-        - noop
-
-- project-template:
     name: wazo-tox-py39
     description: Project template for tox -e py39
     wazo-check:
@@ -41,21 +28,6 @@
     wazo-gate:
       jobs:
         - wazo-tox-py39
-    auto-merge:
-      jobs:
-        - noop
-
-- project-template:
-    name: wazo-tox-linters
-    description: Project template for tox -e linters
-    wazo-check:
-      jobs:
-        - tox-linters:
-            nodeset: pod-debian-10
-    wazo-gate:
-      jobs:
-        - tox-linters:
-            nodeset: pod-debian-10
     auto-merge:
       jobs:
         - noop
@@ -71,19 +43,6 @@
       jobs:
         - tox-linters:
             nodeset: pod-python-310
-    auto-merge:
-      jobs:
-        - noop
-
-- project-template:
-    name: wazo-tox-integration
-    description: Project template for tox -e integration
-    wazo-check:
-      jobs:
-        - wazo-tox-integration
-    wazo-gate:
-      jobs:
-        - wazo-tox-integration
     auto-merge:
       jobs:
         - noop
@@ -106,10 +65,10 @@
     description: Project template for tox -e molecule
     wazo-check:
       jobs:
-        - wazo-tox-molecule
+        - wazo-tox-molecule-bullseye
     wazo-gate:
       jobs:
-        - wazo-tox-molecule
+        - wazo-tox-molecule-bullseye
     auto-merge:
       jobs:
         - noop
@@ -120,11 +79,11 @@
     wazo-check:
       jobs:
         - docker-build:
-            nodeset: vm-debian-10-m1s
+            nodeset: vm-debian-11-m1s
     wazo-gate:
       jobs:
         - docker-build:
-            nodeset: vm-debian-10-m1s
+            nodeset: vm-debian-11-m1s
     auto-merge:
       jobs:
         - noop
@@ -151,19 +110,6 @@
     wazo-gate:
       jobs:
         - wazo-c4-docker-build-test
-    auto-merge:
-      jobs:
-        - noop
-
-- project-template:
-    name: debian-packaging-template
-    description: Project template to build Debian packages
-    wazo-check:
-      jobs:
-        - debian-packaging
-    wazo-gate:
-      jobs:
-        - debian-packaging
     auto-merge:
       jobs:
         - noop
