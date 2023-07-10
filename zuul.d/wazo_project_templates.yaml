@@ -2,30 +2,30 @@
 - project-template:
     name: wazo-ansible-uc-template
     description: Project template to test the UC installer
-    check:
+    wazo-check:
       jobs:
         - wazo-ansible-uc
-    gate:
+    wazo-gate:
       jobs:
         - wazo-ansible-uc
 
 - project-template:
     name: wazo-ansible-uc-bullseye
     description: Project template to test the UC installer
-    check:
+    wazo-check:
       jobs:
         - wazo-ansible-uc-bullseye
-    gate:
+    wazo-gate:
       jobs:
         - wazo-ansible-uc-bullseye
 
 - project-template:
     name: wazo-tox-py37
     description: Project template for tox -e py37
-    check:
+    wazo-check:
       jobs:
         - wazo-tox-py37
-    gate:
+    wazo-gate:
       jobs:
         - wazo-tox-py37
     auto-merge:
@@ -35,10 +35,10 @@
 - project-template:
     name: wazo-tox-py39
     description: Project template for tox -e py39
-    check:
+    wazo-check:
       jobs:
         - wazo-tox-py39
-    gate:
+    wazo-gate:
       jobs:
         - wazo-tox-py39
     auto-merge:
@@ -48,11 +48,11 @@
 - project-template:
     name: wazo-tox-linters
     description: Project template for tox -e linters
-    check:
+    wazo-check:
       jobs:
         - tox-linters:
             nodeset: pod-debian-10
-    gate:
+    wazo-gate:
       jobs:
         - tox-linters:
             nodeset: pod-debian-10
@@ -63,11 +63,11 @@
 - project-template:
     name: wazo-tox-linters-310
     description: Project template for tox -e linters in Python 3.10
-    check:
+    wazo-check:
       jobs:
         - tox-linters:
             nodeset: pod-python-310
-    gate:
+    wazo-gate:
       jobs:
         - tox-linters:
             nodeset: pod-python-310
@@ -78,10 +78,10 @@
 - project-template:
     name: wazo-tox-integration
     description: Project template for tox -e integration
-    check:
+    wazo-check:
       jobs:
         - wazo-tox-integration
-    gate:
+    wazo-gate:
       jobs:
         - wazo-tox-integration
     auto-merge:
@@ -91,10 +91,10 @@
 - project-template:
     name: wazo-tox-integration-py39
     description: Project template for tox -e integration with Python 3.9
-    check:
+    wazo-check:
       jobs:
         - wazo-tox-integration-py39
-    gate:
+    wazo-gate:
       jobs:
         - wazo-tox-integration-py39
     auto-merge:
@@ -104,10 +104,10 @@
 - project-template:
     name: molecule
     description: Project template for tox -e molecule
-    check:
+    wazo-check:
       jobs:
         - wazo-tox-molecule
-    gate:
+    wazo-gate:
       jobs:
         - wazo-tox-molecule
     auto-merge:
@@ -117,11 +117,11 @@
 - project-template:
     name: docker-build-template
     description: Project template to build a Docker image
-    check:
+    wazo-check:
       jobs:
         - docker-build:
             nodeset: vm-debian-10-m1s
-    gate:
+    wazo-gate:
       jobs:
         - docker-build:
             nodeset: vm-debian-10-m1s
@@ -132,10 +132,10 @@
 - project-template:
     name: wazo-c4-test-template
     description: Project template to test wazo-c4
-    check:
+    wazo-check:
       jobs:
         - wazo-c4-test
-    gate:
+    wazo-gate:
       jobs:
         - wazo-c4-test
     auto-merge:
@@ -145,10 +145,10 @@
 - project-template:
     name: wazo-c4-docker-build-test-template
     description: Project template to build and test a C4 docker image
-    check:
+    wazo-check:
       jobs:
         - wazo-c4-docker-build-test
-    gate:
+    wazo-gate:
       jobs:
         - wazo-c4-docker-build-test
     auto-merge:
@@ -158,10 +158,10 @@
 - project-template:
     name: debian-packaging-template
     description: Project template to build Debian packages
-    check:
+    wazo-check:
       jobs:
         - debian-packaging
-    gate:
+    wazo-gate:
       jobs:
         - debian-packaging
     auto-merge:
@@ -171,10 +171,10 @@
 - project-template:
     name: debian-packaging-bullseye
     description: Project template to build Debian Bullseye packages
-    check:
+    wazo-check:
       jobs:
         - debian-packaging-bullseye
-    gate:
+    wazo-gate:
       jobs:
         - debian-packaging-bullseye
     auto-merge:
@@ -184,10 +184,10 @@
 - project-template:
     name: yarn-build
     description: Project template for yarn build
-    check:
+    wazo-check:
       jobs:
         - yarn-build
-    gate:
+    wazo-gate:
       jobs:
         - yarn-build
     auto-merge:
@@ -197,10 +197,10 @@
 - project-template:
     name: yarn-test
     description: Project template for yarn test
-    check:
+    wazo-check:
       jobs:
         - yarn-test
-    gate:
+    wazo-gate:
       jobs:
         - yarn-test
     auto-merge:
