@@ -6,7 +6,17 @@
     - name: Upload debian packages
       become: yes
       synchronize:
-        src: "{{ zuul.project.src_dir }}/../pkgs/{Packages,*.deb}"
+        src: "{{ zuul.project.src_dir }}/../pkgs/Packages"
+        dest: '{{ zuul.executor.log_root }}/debian/'
+        mode: pull
+        recursive: false
+        verify_host: true
+        rsync_opts: []
+
+    - name: Upload debian packages
+      become: yes
+      synchronize:
+        src: "{{ zuul.project.src_dir }}/../pkgs/*.deb"
         dest: '{{ zuul.executor.log_root }}/debian/'
         mode: pull
         recursive: false
