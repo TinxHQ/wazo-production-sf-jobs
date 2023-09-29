@@ -116,6 +116,9 @@
       - wazo-platform/wazo-ansible
       - wazo-platform/wazo-acceptance
       - wazo-platform/xivo-ci
+    vars:
+      wazo_distribution: wazo-dev-buster
+      wazo_distribution_upgrade: wazo-dev-buster
     timeout: 10800
     pre-run: playbooks/wazo-acceptance/pre.yaml
     run: playbooks/wazo-acceptance/run.yaml
@@ -130,8 +133,8 @@
       - wazo-platform/wazo-acceptance
       - wazo-platform/xivo-ci
     vars:
-      wazo_distribution: wazo-dev-wip-bullseye
-      wazo_distribution_upgrade: wazo-dev-wip-bullseye
+      wazo_distribution: wazo-dev-bullseye
+      wazo_distribution_upgrade: wazo-dev-bullseye
     timeout: 10800
     pre-run: playbooks/wazo-acceptance/pre.yaml
     run: playbooks/wazo-acceptance/run.yaml
@@ -162,8 +165,8 @@
     post-run: playbooks/wazo-ansible/fetch-logs.yaml
     vars:
       wazo_debian_repo: main
-      wazo_distribution: wazo-dev-wip-bullseye
-      wazo_distribution_upgrade: wazo-dev-wip-bullseye
+      wazo_distribution: wazo-dev-bullseye
+      wazo_distribution_upgrade: wazo-dev-bullseye
     required-projects:
       - wazo-platform/xivo-ci
     nodeset: vm-debian-11-m1s

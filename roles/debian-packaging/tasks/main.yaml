@@ -17,12 +17,12 @@
   become: yes
   apt_key:
     url: http://mirror.wazo.community/wazo_current.key
-    id: 2769B67EDBFF423F6874D7663F1BF7FC527FBC6A
+    id: 012391C4B871734F505B1F3A778B8E0319121AED
 
-- name: Use different default wazo_distribution if bullseye
+- name: Use different default wazo_distribution if bookwork
   ansible.builtin.set_fact:
-    wazo_distribution: wazo-dev-wip-bullseye
-  when: zuul.branch == 'bullseye'
+    wazo_distribution: wazo-dev-bookwork
+  when: zuul.branch == 'bookwork'
 
 - name: Configure Wazo dev repository
   become: yes
