@@ -9,7 +9,7 @@ for p in $(ls *.deb); do
     vers=$(dpkg-deb -f $p Version)
     rem_vers=$(apt-cache policy $name|sed -n 's/.*Candidate:.* //p')
     if ! dpkg --compare-versions "$vers" gt "$rem_vers"; then
-        echo "$p not greater than repository version ($rem_vers)"
+        echo "$p ($vers) not greater than repository version ($rem_vers)"
         exit 1
     fi
 done
