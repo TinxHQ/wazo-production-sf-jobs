@@ -29,12 +29,13 @@
             default:
               wazo_host: "{{ ansible_docker0.ipv4.address }}"
 
-    - name: Setup acceptance tests
-      shell: "tox -e setup"
-      args:
-        chdir: "{{ zuul.project.src_dir }}/../wazo-acceptance"
+    - import_role: name=wazo-tox
+      vars:
+        tox_envlist: setup
+        zuul_work_dir: "{{ zuul.project.src_dir }}/../wazo-acceptance"
 
-    - name: Run acceptance tests
-      shell: "tox -e behave -- --no-capture --no-color features/daily"
-      args:
-        chdir: "{{ zuul.project.src_dir }}/../wazo-acceptance"
+    - import_role: name=wazo-tox
+      vars:
+        tox_envlist: behave
+        tox_extra_args: "-- --no-capture --no-color features/daily"
+        zuul_work_dir: "{{ zuul.project.src_dir }}/../wazo-acceptance"
