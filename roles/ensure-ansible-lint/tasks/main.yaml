@@ -1,3 +1,6 @@
 ---
 - name: Ensure ansible-lint is installed
   shell: type ansible-lint || pip install --user ansible-lint
+
+- name: Ensure ansible collections (2.10.7) are installed for lint
+  shell: pip show ansible || pip install --user ansible==2.10.7
