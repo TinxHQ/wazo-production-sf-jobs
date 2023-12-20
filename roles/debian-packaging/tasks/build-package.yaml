@@ -30,7 +30,7 @@
           debian/rules get-orig-source;
           tar xvf ../*.tar* --strip 1 --exclude 'debian/*';
         else
-          dch -b -v $(../xivo-ci/bin/wazo-package-version $(wget -q -O - http://mirror.wazo.community/version/unstable)) --distribution $distribution --force-distribution \"$(git log -1 HEAD --pretty=format:%s)\";
+          dch -b -v $(../wazo-ci/bin/wazo-package-version $(wget -q -O - http://mirror.wazo.community/version/unstable)) --distribution $distribution --force-distribution \"$(git log -1 HEAD --pretty=format:%s)\";
         fi
       args:
         chdir: "{{ ansible_env.HOME }}/{{ item.project.src_dir }}"
@@ -92,4 +92,4 @@
         path: "{{ ansible_env.HOME }}/{{ item.project.src_dir }}-build-deps"
         state: absent
 
-  when: debian_pkg.stat.exists and (item.project.short_name != 'xivo-ci' or zuul.project.short_name == 'xivo-ci')
+  when: debian_pkg.stat.exists and (item.project.short_name != 'wazo-ci' or zuul.project.short_name == 'wazo-ci')
