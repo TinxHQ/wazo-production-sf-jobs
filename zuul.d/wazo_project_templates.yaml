@@ -89,32 +89,6 @@
         - noop
 
 - project-template:
-    name: wazo-c4-test-template
-    description: Project template to test wazo-c4
-    wazo-check:
-      jobs:
-        - wazo-c4-test
-    wazo-gate:
-      jobs:
-        - wazo-c4-test
-    auto-merge:
-      jobs:
-        - noop
-
-- project-template:
-    name: wazo-c4-docker-build-test-template
-    description: Project template to build and test a C4 docker image
-    wazo-check:
-      jobs:
-        - wazo-c4-docker-build-test
-    wazo-gate:
-      jobs:
-        - wazo-c4-docker-build-test
-    auto-merge:
-      jobs:
-        - noop
-
-- project-template:
     name: debian-packaging-bullseye
     description: Project template to build Debian Bullseye packages
     wazo-check:

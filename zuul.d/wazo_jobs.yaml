@@ -48,20 +48,6 @@
     run: playbooks/docker-build/run.yaml
 
 - job:
-    name: wazo-c4-docker-build-test
-    run: playbooks/wazo-c4-docker-build-test/run.yaml
-    post-run: playbooks/wazo-c4-test/fetch-logs.yaml
-    nodeset: vm-debian-10-m1s
-    required-projects:
-      - wazo-platform/wazo-c4
-
-- job:
-    name: wazo-c4-test
-    run: playbooks/wazo-c4-test/run.yaml
-    post-run: playbooks/wazo-c4-test/fetch-logs.yaml
-    nodeset: vm-debian-10-m1s
-
-- job:
     name: yarn-build
     description: Run yarn build
     parent: base
