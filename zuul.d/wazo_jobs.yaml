@@ -48,23 +48,6 @@
     run: playbooks/docker-build/run.yaml
 
 - job:
-    name: yarn-build
-    description: Run yarn build
-    parent: base
-    run: playbooks/yarn-build/run.yaml
-    nodeset: pod-node-12
-
-- job:
-    name: yarn-test
-    description: Run yarn test
-    parent: base
-    timeout: 10800
-    run: playbooks/yarn-test/run.yaml
-    nodeset: pod-node-12
-    #openstack2 nodeset config for test job
-    # nodeset: vm-ubuntu-10-ubnt1
-
-- job:
     name: wazo-acceptance-bullseye
     description: install Wazo platform and run acceptance tests on Bullseye
     required-projects:
