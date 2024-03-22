@@ -14,7 +14,7 @@ def get_package_name(tox_python, root):
         cwd=os.path.abspath(root))
     top_level = glob.glob(f"{root}/*.egg-info/top_level.txt")[0]
     with open(top_level) as f:
-        return f.read().strip()
+        return f.readline().strip()
 
 
 def main():
