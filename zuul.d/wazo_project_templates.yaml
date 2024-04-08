@@ -61,6 +61,13 @@
         - noop
 
 - project-template:
+    name: wazo-tox-performance-py39
+    description: Project template for daily tox -e performance with Python 3.9
+    periodic:
+      jobs:
+        - wazo-tox-performance-py39
+
+- project-template:
     name: molecule
     description: Project template for tox -e molecule
     wazo-check:

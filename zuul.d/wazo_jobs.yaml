@@ -29,6 +29,19 @@
     nodeset: vm-debian-11-m1s
 
 - job:
+    name: wazo-tox-performance-py39
+    parent: wazo-tox
+    vars:
+      docker_install_siblings: true
+      tox_envlist: performance
+    secrets:
+      - name: mattermost
+        secret: mattermost
+    run: playbooks/wazo-tox-integration/run.yaml
+    post-run: playbooks/wazo-tox-integration/alert-mm.yaml
+    nodeset: vm-debian-11-m1m
+
+- job:
     name: wazo-tox-py39
     parent: wazo-tox
     vars:
