@@ -56,9 +56,6 @@ def main():
 
         package = get_package_name(tox_python, root)
         volumes.add(
-            f"{os.path.realpath(root)}/{package}:/opt/venv/lib/python3.7/site-packages/{package}"
-        )
-        volumes.add(
             f"{os.path.realpath(root)}/{package}:/opt/venv/lib/python3.9/site-packages/{package}"
         )
 
