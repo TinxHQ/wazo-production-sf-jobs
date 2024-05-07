@@ -35,8 +35,8 @@
       docker_install_siblings: true
       tox_envlist: performance
     secrets:
-      - name: mattermost
-        secret: mattermost
+      - name: mattermost_sf_jobs
+        secret: mattermost_sf_jobs
     run: playbooks/wazo-tox-integration/run.yaml
     post-run: playbooks/wazo-tox-integration/alert-mm.yaml
     nodeset: vm-debian-11-m1m
