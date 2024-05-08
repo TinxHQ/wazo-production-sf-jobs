@@ -66,7 +66,7 @@
   register: docker_sibling_results
   when: docker_install_siblings
 
-- name: Set docker-compose override location env
+- name: Set docker compose override location env
   set_fact:
     docker_compose_override_env:
       WAZO_TEST_DOCKER_OVERRIDE_EXTRA: "{{ docker_sibling_results.file }}"
