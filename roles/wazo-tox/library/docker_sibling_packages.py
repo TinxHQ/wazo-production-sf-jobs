@@ -59,16 +59,8 @@ def main():
             f"{os.path.realpath(root)}/{package}:/opt/venv/lib/python3.9/site-packages/{package}"
         )
 
-    version = '3'
-    compose_file = f'{project_dir}/integration_tests/assets/docker-compose.yml'
-    if os.path.exists(compose_file):
-        with open(compose_file) as f:
-            data = yaml.load(f)
-            if 'version' in data:
-                version = data['version']
     volumes = list(volumes)
     docker_compose_override = {
-        'version': version,
         'services': {
             service: {'volumes': volumes}
             for service in services
