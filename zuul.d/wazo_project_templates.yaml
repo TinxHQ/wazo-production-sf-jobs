@@ -61,6 +61,22 @@
         - noop
 
 - project-template:
+    name: wazo-acceptance-bullseye
+    description: Project template for running acceptance tests
+    wazo-check:
+      jobs:
+        - noop
+    wazo-gate:
+      jobs:
+        - noop
+    auto-merge:
+      jobs:
+        - noop
+    experimental:
+      jobs:
+        - wazo-acceptance-bullseye
+
+- project-template:
     name: wazo-tox-performance-py39
     description: Project template for daily tox -e performance with Python 3.9
     periodic:
