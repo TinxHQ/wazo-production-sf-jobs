@@ -63,15 +63,6 @@
 - project-template:
     name: wazo-acceptance-bullseye
     description: Project template for running acceptance tests
-    wazo-check:
-      jobs:
-        - noop
-    wazo-gate:
-      jobs:
-        - noop
-    auto-merge:
-      jobs:
-        - noop
     experimental:
       jobs:
         - wazo-acceptance-bullseye
