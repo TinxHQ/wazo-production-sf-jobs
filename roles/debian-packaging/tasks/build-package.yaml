@@ -30,7 +30,7 @@
           debian/rules get-orig-source;
           tar xvf ../*.tar* --strip 1 --exclude 'debian/*';
         else
-          dch -b -v $(../wazo-ci/bin/wazo-package-version $(wget -q -O - http://mirror.wazo.community/version/unstable)) --distribution $distribution --force-distribution \"$(git log -1 HEAD --pretty=format:%s)\";
+          dch -b -v $(../wazo-ci/bin/wazo-package-version $(wget -q -O - http://mirror.wazo.community/version/unstable)) --distribution $distribution --force-distribution "$(git log -1 HEAD --pretty=format:%s)";
         fi
       args:
         chdir: "{{ ansible_env.HOME }}/{{ item.project.src_dir }}"
