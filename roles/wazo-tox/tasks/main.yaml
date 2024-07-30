@@ -72,6 +72,21 @@
       WAZO_TEST_DOCKER_OVERRIDE_EXTRA: "{{ docker_sibling_results.file }}"
   when: docker_install_siblings
 
+- name: Build sibling mock docker images
+  community.docker.docker_image:
+    build:
+      path: "{{ zuul.projects['github.com/wazo-platform/wazo-test-helpers'].src_dir }}/contribs/docker/{{ item }}"
+    name: "wazoplatform/{{ item }}"
+    source: build
+  loop:
+    - flask
+    - wait
+    - wazo-amid-mock
+    - wazo-auth-mock
+    - wazo-confd-mock
+    - wazo-sysconfd-mock
+  when: docker_install_siblings and 'github.com/wazo-platform/wazo-test-helpers' in zuul.projects
+
 - name: Set the integration environment variables
   set_fact:
     integration_env:
