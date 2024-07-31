@@ -72,6 +72,12 @@
       WAZO_TEST_DOCKER_OVERRIDE_EXTRA: "{{ docker_sibling_results.file }}"
   when: docker_install_siblings
 
+# This should be installed in the elements instead
+- name: Install docker Python lib
+  ansible.builtin.pip:
+    name: docker
+    state: present
+
 - name: Build sibling mock docker images
   community.docker.docker_image:
     build:
