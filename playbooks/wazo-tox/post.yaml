@@ -40,16 +40,6 @@
         chdir: "{{ zuul.project.src_dir }}"
       when: coverage_artifacts.stat.exists
 
-    - name: Fetch coverage report
-      synchronize:
-        src: '{{ coverage_artifacts.stat.path }}/report.txt'
-        dest: '{{ zuul.executor.log_root }}/coverage.txt'
-        mode: pull
-        copy_links: true
-        verify_host: true
-        rsync_opts: []
-      when: coverage_artifacts.stat.exists
-
     - name: Fetch coverage HTML report
       synchronize:
         src: '{{ coverage_artifacts.stat.path }}/report-html/'
