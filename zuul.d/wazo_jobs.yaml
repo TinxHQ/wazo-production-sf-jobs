@@ -89,4 +89,4 @@
       wazo_distribution_upgrade: wazo-dev-bullseye
     required-projects:
       - wazo-platform/wazo-ci
-    nodeset: vm-debian-11-m1s
+    nodeset: vm-debian-11-m1m
