@@ -2,6 +2,12 @@
 - hosts: all
   become: yes
   tasks:
+    - name: Rotate logs (before compression)
+      shell: "logrotate -f /etc/logrotate.conf"
+
+    - name: Compress logs (before upload)
+      shell: "find /var/log -name '*.log.1' | xargs gzip"
+
     - name: Upload logs
       synchronize:
         src: "/var/log"
@@ -9,7 +15,8 @@
         mode: pull
         copy_links: true
         verify_host: true
-        rsync_opts: []
+        rsync_opts:
+          - '--exclude=journal/'
 
     - name: Upload configuration
       synchronize:
