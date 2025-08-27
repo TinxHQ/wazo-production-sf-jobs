@@ -7,7 +7,6 @@
       - 'build-essential'
       - 'autopkgtest'
       - 'aptitude'
-      # - 'piuparts'
     update_cache: true
     state: present
   vars:
@@ -19,10 +18,10 @@
     url: http://mirror.wazo.community/wazo_current.key
     id: 012391C4B871734F505B1F3A778B8E0319121AED
 
-- name: Use different default wazo_distribution if bookwork
+- name: Use different default wazo_distribution if bookworm
   ansible.builtin.set_fact:
-    wazo_distribution: wazo-dev-bookwork
-  when: zuul.branch == 'bookwork'
+    wazo_distribution: wazo-dev-bookworm
+  when: zuul.branch == 'bookworm'
 
 - name: Configure Wazo dev repository
   become: yes
