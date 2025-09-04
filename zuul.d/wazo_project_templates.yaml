@@ -58,6 +58,21 @@
         - noop
 
 - project-template:
+    name: wazo-tox-linters-py311
+    description: Project template for tox -e linters in Python 3.11
+    wazo-check:
+      jobs:
+        - tox-linters:
+            nodeset: pod-debian-12
+    wazo-gate:
+      jobs:
+        - tox-linters:
+            nodeset: pod-debian-12
+    auto-merge:
+      jobs:
+        - noop
+
+- project-template:
     name: wazo-tox-integration-py39
     description: Project template for tox -e integration with Python 3.9
     wazo-check:
@@ -66,6 +81,19 @@
     wazo-gate:
       jobs:
         - wazo-tox-integration-py39
+    auto-merge:
+      jobs:
+        - noop
+
+- project-template:
+    name: wazo-tox-integration-py311
+    description: Project template for tox -e integration with Python 3.11
+    wazo-check:
+      jobs:
+        - wazo-tox-integration-py311
+    wazo-gate:
+      jobs:
+        - wazo-tox-integration-py311
     auto-merge:
       jobs:
         - noop
@@ -90,6 +118,13 @@
     periodic:
       jobs:
         - wazo-tox-performance-py39
+
+- project-template:
+    name: wazo-tox-performance-py311
+    description: Project template for daily tox -e performance with Python 3.11
+    periodic:
+      jobs:
+        - wazo-tox-performance-py311
 
 - project-template:
     name: molecule
