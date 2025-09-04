@@ -20,6 +20,16 @@
         - wazo-ansible-uc-bullseye
 
 - project-template:
+    name: wazo-ansible-uc-bookworm
+    description: Project template to test the UC installer
+    wazo-check:
+      jobs:
+        - wazo-ansible-uc-bookworm
+    wazo-gate:
+      jobs:
+        - wazo-ansible-uc-bookworm
+
+- project-template:
     name: wazo-tox-py39
     description: Project template for tox -e py39
     wazo-check:
@@ -68,6 +78,13 @@
         - wazo-acceptance-bullseye
 
 - project-template:
+    name: wazo-acceptance-bookworm
+    description: Project template for running acceptance tests
+    experimental:
+      jobs:
+        - wazo-acceptance-bookworm
+
+- project-template:
     name: wazo-tox-performance-py39
     description: Project template for daily tox -e performance with Python 3.9
     periodic:
@@ -83,6 +100,19 @@
     wazo-gate:
       jobs:
         - wazo-tox-molecule-bullseye
+    auto-merge:
+      jobs:
+        - noop
+
+- project-template:
+    name: molecule
+    description: Project template for tox -e molecule
+    wazo-check:
+      jobs:
+        - wazo-tox-molecule-bookworm
+    wazo-gate:
+      jobs:
+        - wazo-tox-molecule-bookworm
     auto-merge:
       jobs:
         - noop
@@ -111,6 +141,19 @@
     wazo-gate:
       jobs:
         - debian-packaging-bullseye
+    auto-merge:
+      jobs:
+        - noop
+
+- project-template:
+    name: debian-packaging-bookworm
+    description: Project template to build Debian Bookworm packages
+    wazo-check:
+      jobs:
+        - debian-packaging-bookworm
+    wazo-gate:
+      jobs:
+        - debian-packaging-bookworm
     auto-merge:
       jobs:
         - noop

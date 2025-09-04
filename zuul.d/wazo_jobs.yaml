@@ -20,6 +20,13 @@
     nodeset: vm-debian-11-m1s
 
 - job:
+    name: wazo-tox-molecule-bookworm
+    parent: wazo-tox
+    vars:
+      tox_envlist: molecule
+    nodeset: vm-debian-12-m1s
+
+- job:
     name: wazo-tox-integration-py39
     parent: wazo-tox
     vars:
@@ -57,6 +64,14 @@
       - wazo-platform/wazo-ci
 
 - job:
+    name: debian-packaging-bookworm
+    run: playbooks/debian-packaging/run.yaml
+    provides: repo
+    nodeset: vm-debian-12-m1s
+    required-projects:
+      - wazo-platform/wazo-ci
+
+- job:
     name: docker-build
     run: playbooks/docker-build/run.yaml
 
@@ -77,6 +92,22 @@
     nodeset: vm-debian-11-m1m
 
 - job:
+    name: wazo-acceptance-bookworm
+    description: install Wazo platform and run acceptance tests on Bullseye
+    required-projects:
+      - wazo-platform/wazo-ansible
+      - wazo-platform/wazo-acceptance
+      - wazo-platform/wazo-ci
+    vars:
+      wazo_distribution: wazo-dev-bookworm
+      wazo_distribution_upgrade: wazo-dev-bookworm
+    timeout: 10800
+    pre-run: playbooks/wazo-acceptance/pre.yaml
+    run: playbooks/wazo-acceptance/run.yaml
+    post-run: playbooks/wazo-acceptance/fetch-logs.yaml
+    nodeset: vm-debian-12-m1m
+
+- job:
     name: wazo-ansible-uc-bullseye
     description: Install Wazo Platform UC use case
     timeout: 10800
@@ -90,3 +121,18 @@
     required-projects:
       - wazo-platform/wazo-ci
     nodeset: vm-debian-11-m1m
+
+- job:
+    name: wazo-ansible-uc-bookworm
+    description: Install Wazo Platform UC use case
+    timeout: 10800
+    pre-run: playbooks/wazo-ansible/pre.yaml
+    run: playbooks/wazo-ansible/run.yaml
+    post-run: playbooks/wazo-ansible/fetch-logs.yaml
+    vars:
+      wazo_debian_repo: main
+      wazo_distribution: wazo-dev-bookworm
+      wazo_distribution_upgrade: wazo-dev-bookworm
+    required-projects:
+      - wazo-platform/wazo-ci
+    nodeset: vm-debian-12-m1m
