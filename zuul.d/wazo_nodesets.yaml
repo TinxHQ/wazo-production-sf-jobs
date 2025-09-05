@@ -6,6 +6,12 @@
         name: pod-debian-11
 
 - nodeset:
+    name: pod-debian-12
+    nodes:
+      - label: pod-debian-12
+        name: pod-debian-12
+
+- nodeset:
     name: pod-node-12
     nodes:
       - label: pod-node-12
@@ -28,3 +34,15 @@
     nodes:
       - label: vm-debian-11-m1m
         name: vm-debian-11-m1m
+
+- nodeset:
+    name: vm-debian-12-m1s
+    nodes:
+      - label: vm-debian-12-m1s
+        name: vm-debian-12-m1s
+
+- nodeset:
+    name: vm-debian-12-m1m
+    nodes:
+      - label: vm-debian-12-m1m
+        name: vm-debian-12-m1m

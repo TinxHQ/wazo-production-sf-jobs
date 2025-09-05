@@ -20,6 +20,16 @@
         - wazo-ansible-uc-bullseye
 
 - project-template:
+    name: wazo-ansible-uc-bookworm
+    description: Project template to test the UC installer
+    wazo-check:
+      jobs:
+        - wazo-ansible-uc-bookworm
+    wazo-gate:
+      jobs:
+        - wazo-ansible-uc-bookworm
+
+- project-template:
     name: wazo-tox-py39
     description: Project template for tox -e py39
     wazo-check:
@@ -48,6 +58,21 @@
         - noop
 
 - project-template:
+    name: wazo-tox-linters-py311
+    description: Project template for tox -e linters in Python 3.11
+    wazo-check:
+      jobs:
+        - tox-linters:
+            nodeset: pod-debian-12
+    wazo-gate:
+      jobs:
+        - tox-linters:
+            nodeset: pod-debian-12
+    auto-merge:
+      jobs:
+        - noop
+
+- project-template:
     name: wazo-tox-integration-py39
     description: Project template for tox -e integration with Python 3.9
     wazo-check:
@@ -61,6 +86,19 @@
         - noop
 
 - project-template:
+    name: wazo-tox-integration-py311
+    description: Project template for tox -e integration with Python 3.11
+    wazo-check:
+      jobs:
+        - wazo-tox-integration-py311
+    wazo-gate:
+      jobs:
+        - wazo-tox-integration-py311
+    auto-merge:
+      jobs:
+        - noop
+
+- project-template:
     name: wazo-acceptance-bullseye
     description: Project template for running acceptance tests
     experimental:
@@ -68,11 +106,25 @@
         - wazo-acceptance-bullseye
 
 - project-template:
+    name: wazo-acceptance-bookworm
+    description: Project template for running acceptance tests
+    experimental:
+      jobs:
+        - wazo-acceptance-bookworm
+
+- project-template:
     name: wazo-tox-performance-py39
     description: Project template for daily tox -e performance with Python 3.9
     periodic:
       jobs:
         - wazo-tox-performance-py39
+
+- project-template:
+    name: wazo-tox-performance-py311
+    description: Project template for daily tox -e performance with Python 3.11
+    periodic:
+      jobs:
+        - wazo-tox-performance-py311
 
 - project-template:
     name: molecule
@@ -88,16 +140,29 @@
         - noop
 
 - project-template:
+    name: molecule
+    description: Project template for tox -e molecule
+    wazo-check:
+      jobs:
+        - wazo-tox-molecule-bookworm
+    wazo-gate:
+      jobs:
+        - wazo-tox-molecule-bookworm
+    auto-merge:
+      jobs:
+        - noop
+
+- project-template:
     name: docker-build-template
     description: Project template to build a Docker image
     wazo-check:
       jobs:
         - docker-build:
-            nodeset: vm-debian-11-m1s
+            nodeset: vm-debian-12-m1s
     wazo-gate:
       jobs:
         - docker-build:
-            nodeset: vm-debian-11-m1s
+            nodeset: vm-debian-12-m1s
     auto-merge:
       jobs:
         - noop
@@ -111,6 +176,19 @@
     wazo-gate:
       jobs:
         - debian-packaging-bullseye
+    auto-merge:
+      jobs:
+        - noop
+
+- project-template:
+    name: debian-packaging-bookworm
+    description: Project template to build Debian Bookworm packages
+    wazo-check:
+      jobs:
+        - debian-packaging-bookworm
+    wazo-gate:
+      jobs:
+        - debian-packaging-bookworm
     auto-merge:
       jobs:
         - noop
