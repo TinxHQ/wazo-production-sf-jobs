@@ -43,6 +43,19 @@
         - noop
 
 - project-template:
+    name: wazo-tox-py311
+    description: Project template for tox -e py311
+    wazo-check:
+      jobs:
+        - wazo-tox-py311
+    wazo-gate:
+      jobs:
+        - wazo-tox-py311
+    auto-merge:
+      jobs:
+        - noop
+
+- project-template:
     name: wazo-tox-linters-310
     description: Project template for tox -e linters in Python 3.10
     wazo-check:
