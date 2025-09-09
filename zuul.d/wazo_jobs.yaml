@@ -82,7 +82,7 @@
     parent: wazo-tox
     vars:
       tox_envlist: py311
-    nodeset: pod-debian-12
+    nodeset: vm-debian-12-m1s
 
 - job:
     name: debian-packaging-bullseye
