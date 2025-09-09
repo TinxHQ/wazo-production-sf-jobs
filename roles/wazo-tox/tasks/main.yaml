@@ -74,8 +74,10 @@
 
 # This should be installed in the elements instead
 - name: Install docker Python lib
-  ansible.builtin.pip:
-    name: docker
+  become: true
+  apt:
+    name: python3-docker
+    update_cache: true
     state: present
 
 - name: Build sibling mock docker images
