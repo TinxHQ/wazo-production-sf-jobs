@@ -16,7 +16,7 @@
   become: yes
   apt_key:
     url: http://mirror.wazo.community/wazo_current.key
-    id: 012391C4B871734F505B1F3A778B8E0319121AED
+    id: 07BD80E9769F598C0C8281253130D90DD87E06EF
 
 - name: Use different default wazo_distribution if bookworm
   ansible.builtin.set_fact:
