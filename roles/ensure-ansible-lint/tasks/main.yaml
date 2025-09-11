@@ -6,7 +6,7 @@
     - ansible_distribution_release == "bullseye"
 
 - name: Ensure ansible-lint is installed (Bookworm)
-  shell: pipx install ansible-lint
+  shell: pipx install ansible-lint ansible-base
   when:
     - ansible_distribution == "Debian"
     - ansible_distribution_release == "bookworm"
