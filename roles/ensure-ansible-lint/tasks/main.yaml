@@ -1,3 +1,12 @@
 ---
-- name: Ensure ansible-lint is installed
-  shell: type ansible-lint || pip install --user ansible-lint
+- name: Ensure ansible-lint is installed (Bullseye)
+  shell: pip install --user ansible-lint
+  when:
+    - ansible_distribution == "Debian"
+    - ansible_distribution_release == "bullseye"
+
+- name: Ensure ansible-lint is installed (Bookworm)
+  shell: pipx install ansible-lint
+  when:
+    - ansible_distribution == "Debian"
+    - ansible_distribution_release == "bookworm"

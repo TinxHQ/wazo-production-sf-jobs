@@ -1,3 +1,12 @@
 ---
-- name: Ensure ansible-review is installed
-  shell: type ansible-review || pip install --user ansible-review
+- name: Ensure ansible-review is installed (Bullseye)
+  shell: pip install --user ansible-review
+  when:
+    - ansible_distribution == "Debian"
+    - ansible_distribution_release == "bullseye"
+
+- name: Ensure ansible-review is installed (Bookworm)
+  shell: pipx install ansible-review
+  when:
+    - ansible_distribution == "Debian"
+    - ansible_distribution_release == "bookworm"
