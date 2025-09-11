@@ -1,4 +1,10 @@
 ---
+- name: Ensure ansible collections (2.10.7) are installed for lint
+  shell: pip show ansible || pip install --user ansible==2.10.7
+  when:
+    - ansible_distribution == "Debian"
+    - ansible_distribution_release == "bullseye"
+
 - name: Ensure ansible-lint is installed (Bullseye)
   shell: pip install --user ansible-lint
   when:
