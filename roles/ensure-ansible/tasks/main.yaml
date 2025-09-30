@@ -1,12 +1,3 @@
 ---
-- name: Ensure ansible is installed (Bullseye)
-  shell: pip install --user ansible
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_distribution_release == "bullseye"
-
-- name: Ensure ansible is installed (Bookworm)
-  shell: pipx install ansible
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_distribution_release == "bookworm"
+- name: Ensure ansible is installed
+  shell: type ansible || pip install --user ansible
