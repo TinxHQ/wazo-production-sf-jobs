@@ -21,7 +21,7 @@ pipeline {
   }
   post {
     failure {
-      mattermostSend color: "danger", channel: "#infrastructure", message: "[Software Factory jobs](https://github.com/TinxHQ/wazo-production-sf-jobs) is missing bookworm steps on master - [Job :nuke:](${JOB_URL})"
+      mattermostSend color: "danger", channel: "#infrastructure", message: "[Software Factory jobs](https://github.com/TinxHQ/wazo-production-sf-jobs) is missing custom steps on master - [Job :nuke:](${JOB_URL})"
     }
   }
 }
