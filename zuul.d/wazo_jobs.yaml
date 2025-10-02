@@ -1,4 +1,7 @@
 ---
+- pragma:
+    implied-branch-matchers: False
+
 - job:
     name: wazo-tox
     parent: tox

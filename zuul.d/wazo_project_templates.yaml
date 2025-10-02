@@ -1,4 +1,7 @@
 ---
+- pragma:
+    implied-branch-matchers: False
+
 - project-template:
     name: wazo-ansible-uc-template
     description: Project template to test the UC installer
