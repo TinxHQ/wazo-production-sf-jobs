@@ -44,7 +44,10 @@
         - coverage_files_found.matched > 0
 
     - name: Install coverage tool (Bookworm)
-      shell: pipx install coverage
+      pip:
+        name: coverage
+        state: present
+        extra_args: --user --break-system-packages
       when:
         - ansible_distribution == "Debian"
         - ansible_distribution_release == "bookworm"
@@ -55,8 +58,6 @@
       shell: |
         python3 -m coverage combine --data-file {{ coverage_artifacts.stat.path }}/combined.coverage {{ coverage_artifacts.stat.path }}/*.coverage
         python3 -m coverage html --data-file {{ coverage_artifacts.stat.path }}/combined.coverage --directory {{ coverage_artifacts.stat.path }}/report-html
-      environment:
-        PATH: "{{ ansible_env.PATH }}:{{ ansible_env.HOME }}/.local/bin"
       args:
         chdir: "{{ zuul.project.src_dir }}"
       when:
