@@ -17,7 +17,7 @@
   ansible.builtin.replace:
     path: "{{ item.stat.path }}"
     regexp: (wazo-platform.*)master\.zip
-    replace: \1/{{ zuul.branch }}.zip
+    replace: \1{{ zuul.branch }}.zip
   loop: "{{ requirements_files.results }}"
   when: "'{{ zuul.branch }}' in ['bullseye', 'bookworm'] and {{ item }}.stat.exists"
 
