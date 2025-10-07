@@ -16,8 +16,8 @@
 - name: Replace requirements by predefined base branch (bullseye / bookworm)
   ansible.builtin.replace:
     path: "{{ item.stat.path }}"
-    regexp: /master\.zip
-    replace: /{{ zuul.branch }}.zip
+    regexp: (wazo-platform.*)master\.zip
+    replace: \1/{{ zuul.branch }}.zip
   loop: "{{ requirements_files.results }}"
   when: "'{{ zuul.branch }}' in ['bullseye', 'bookworm'] and {{ item }}.stat.exists"
 
