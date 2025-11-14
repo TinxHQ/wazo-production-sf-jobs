@@ -1,3 +1,12 @@
 ---
-- name: Ensure ansible-lint is installed
-  shell: type ansible-lint || pip install --user ansible-lint
+- name: Ensure ansible collections (7.7.0) are installed for lint (Bookworm)
+  shell: pipx install ansible==7.7.0
+  when:
+    - ansible_distribution == "Debian"
+    - ansible_distribution_release == "bookworm"
+
+- name: Ensure ansible-lint is installed (Bookworm)
+  shell: pipx inject --include-apps ansible ansible-lint
+  when:
+    - ansible_distribution == "Debian"
+    - ansible_distribution_release == "bookworm"
