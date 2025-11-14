@@ -13,16 +13,6 @@
         - wazo-ansible-uc
 
 - project-template:
-    name: wazo-ansible-uc-bullseye
-    description: Project template to test the UC installer
-    wazo-check:
-      jobs:
-        - wazo-ansible-uc-bullseye
-    wazo-gate:
-      jobs:
-        - wazo-ansible-uc-bullseye
-
-- project-template:
     name: wazo-ansible-uc-bookworm
     description: Project template to test the UC installer
     wazo-check:
@@ -33,19 +23,6 @@
         - wazo-ansible-uc-bookworm
 
 - project-template:
-    name: wazo-tox-py39
-    description: Project template for tox -e py39
-    wazo-check:
-      jobs:
-        - wazo-tox-py39
-    wazo-gate:
-      jobs:
-        - wazo-tox-py39
-    auto-merge:
-      jobs:
-        - noop
-
-- project-template:
     name: wazo-tox-py311
     description: Project template for tox -e py311
     wazo-check:
@@ -54,21 +31,6 @@
     wazo-gate:
       jobs:
         - wazo-tox-py311
-    auto-merge:
-      jobs:
-        - noop
-
-- project-template:
-    name: wazo-tox-linters-310
-    description: Project template for tox -e linters in Python 3.10
-    wazo-check:
-      jobs:
-        - tox-linters:
-            nodeset: pod-python-310
-    wazo-gate:
-      jobs:
-        - tox-linters:
-            nodeset: pod-python-310
     auto-merge:
       jobs:
         - noop
@@ -89,19 +51,6 @@
         - noop
 
 - project-template:
-    name: wazo-tox-integration-py39
-    description: Project template for tox -e integration with Python 3.9
-    wazo-check:
-      jobs:
-        - wazo-tox-integration-py39
-    wazo-gate:
-      jobs:
-        - wazo-tox-integration-py39
-    auto-merge:
-      jobs:
-        - noop
-
-- project-template:
     name: wazo-tox-integration-py311
     description: Project template for tox -e integration with Python 3.11
     wazo-check:
@@ -115,13 +64,6 @@
         - noop
 
 - project-template:
-    name: wazo-acceptance-bullseye
-    description: Project template for running acceptance tests
-    experimental:
-      jobs:
-        - wazo-acceptance-bullseye
-
-- project-template:
     name: wazo-acceptance-bookworm
     description: Project template for running acceptance tests
     experimental:
@@ -129,31 +71,11 @@
         - wazo-acceptance-bookworm
 
 - project-template:
-    name: wazo-tox-performance-py39
-    description: Project template for daily tox -e performance with Python 3.9
-    periodic:
-      jobs:
-        - wazo-tox-performance-py39
-
-- project-template:
     name: wazo-tox-performance-py311
     description: Project template for daily tox -e performance with Python 3.11
     periodic:
       jobs:
         - wazo-tox-performance-py311
-
-- project-template:
-    name: molecule
-    description: Project template for tox -e molecule
-    wazo-check:
-      jobs:
-        - wazo-tox-molecule-bullseye
-    wazo-gate:
-      jobs:
-        - wazo-tox-molecule-bullseye
-    auto-merge:
-      jobs:
-        - noop
 
 - project-template:
     name: molecule
@@ -179,19 +101,6 @@
       jobs:
         - docker-build:
             nodeset: vm-debian-12-m1s
-    auto-merge:
-      jobs:
-        - noop
-
-- project-template:
-    name: debian-packaging-bullseye
-    description: Project template to build Debian Bullseye packages
-    wazo-check:
-      jobs:
-        - debian-packaging-bullseye
-    wazo-gate:
-      jobs:
-        - debian-packaging-bullseye
     auto-merge:
       jobs:
         - noop

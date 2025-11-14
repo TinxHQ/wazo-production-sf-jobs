@@ -13,13 +13,13 @@
     - integration_tests/test-requirements-for-tox.txt
   ignore_errors: True
 
-- name: Replace requirements by predefined base branch (bullseye / bookworm)
+- name: Replace requirements by predefined base branch (bookworm / trixie)
   ansible.builtin.replace:
     path: "{{ item.stat.path }}"
     regexp: (wazo-platform.*)master\.zip
     replace: \1{{ zuul.branch }}.zip
   loop: "{{ requirements_files.results }}"
-  when: "'{{ zuul.branch }}' in ['bullseye', 'bookworm'] and {{ item }}.stat.exists"
+  when: "'{{ zuul.branch }}' in ['bookworm', 'trixie'] and {{ item }}.stat.exists"
 
 - name: Run tox without tests
   command: "{{ tox_executable }} --notest -e{{ tox_envlist }}"

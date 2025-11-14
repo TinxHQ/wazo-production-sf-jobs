@@ -32,17 +32,6 @@
       register: coverage_files_found
       when: coverage_artifacts.stat.exists
 
-    - name: Install coverage tool (Bullseye)
-      pip:
-        name: coverage
-        state: present
-        extra_args: --user
-      when:
-        - ansible_distribution == "Debian"
-        - ansible_distribution_release == "bullseye"
-        - coverage_artifacts.stat.exists
-        - coverage_files_found.matched > 0
-
     - name: Install coverage tool (Bookworm)
       pip:
         name: coverage
