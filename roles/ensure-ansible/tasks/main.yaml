@@ -1,6 +1,3 @@
 ---
-- name: Ensure ansible is installed (Bookworm)
-  shell: pipx install ansible
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_distribution_release == "bookworm"
+- name: Ensure ansible is installed
+  shell: type ansible || pip install --user ansible
