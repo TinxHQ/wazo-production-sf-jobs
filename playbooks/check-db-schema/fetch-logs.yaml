@@ -1,16 +1,24 @@
 ---
 - hosts: all
+  vars:
+      check_db_schema_dir: "{{ zuul.project.src_dir }}/../wazo-tools/check-db-schema"
   tasks:
       - name: Extract Postgres container logs
-        shell: docker logs check-db-schema-postgres > check-db-schema-postgres.log 2>&1 || true
+        shell: "docker compose logs --no-color --timestamps | gzip -9 > check-db-schema-postgres.logs.txt.gz"
         args:
-            chdir: '{{ zuul.executor.work_root }}'
+            chdir: "{{ check_db_schema_dir }}"
 
       - name: Upload Postgres container logs
         synchronize:
-            src: '{{ zuul.executor.work_root }}/check-db-schema-postgres.log'
+            src: "{{ check_db_schema_dir }}/check-db-schema-postgres.logs.txt.gz"
             dest: '{{ zuul.executor.log_root }}'
             mode: pull
             copy_links: true
             verify_host: true
             rsync_opts: []
+
+      - name: Stop the Postgres container
+        command: docker compose down -v
+        args:
+            chdir: "{{ check_db_schema_dir }}"
+        failed_when: false
