@@ -64,6 +64,21 @@
         - noop
 
 - project-template:
+    name: check-db-schema
+    description: >-
+      Project template to compare SQLAlchemy models against alembic
+      migrations
+    wazo-check:
+      jobs:
+        - check-db-schema
+    wazo-gate:
+      jobs:
+        - check-db-schema
+    auto-merge:
+      jobs:
+        - noop
+
+- project-template:
     name: wazo-acceptance-bookworm
     description: Project template for running acceptance tests
     experimental:
