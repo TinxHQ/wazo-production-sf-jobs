@@ -93,3 +93,17 @@
     required-projects:
       - wazo-platform/wazo-ci
     nodeset: vm-debian-12-m1m
+
+- job:
+    name: check-db-schema-pg15
+    description: >-
+      Compare a service's SQLAlchemy models against its own alembic
+      migrations; see wazo-tools/check-db-schema/README.md.
+    parent: wazo-tox
+    pre-run: playbooks/check-db-schema/pre.yaml
+    post-run: playbooks/check-db-schema/fetch-logs.yaml
+    required-projects:
+      - wazo-platform/wazo-tools
+    vars:
+      tox_envlist: check-db-schema
+    nodeset: vm-debian-12-m1s

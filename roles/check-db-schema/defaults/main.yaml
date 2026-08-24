@@ -1,0 +1,2 @@
+---
+check_db_schema_dir: "{{ zuul.project.src_dir }}/../wazo-tools/check-db-schema"

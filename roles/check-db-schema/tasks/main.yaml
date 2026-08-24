@@ -1,0 +1,41 @@
+---
+- name: Remove any leftover Postgres container
+  command: docker compose down -v
+  args:
+      chdir: "{{ check_db_schema_dir }}"
+  failed_when: false
+- name: Start a Postgres container
+  command: docker compose up -d
+  args:
+      chdir: "{{ check_db_schema_dir }}"
+- name: Wait for the first-boot re-exec to complete
+  # The official postgres image runs initdb against a temporary,
+  # local-only server, then restarts for real; pg_isready can succeed
+  # against that temporary server moments before it shuts down for the
+  # restart, so wait for this log line (emitted once, right at the
+  # restart) before trusting pg_isready below.
+  command: docker compose logs postgres
+  args:
+      chdir: "{{ check_db_schema_dir }}"
+  register: postgres_logs
+  until: "'PostgreSQL init process complete' in postgres_logs.stdout"
+  retries: 30
+  delay: 1
+- name: Wait for Postgres to accept connections
+  command: docker compose exec -T postgres pg_isready -U postgres
+  args:
+      chdir: "{{ check_db_schema_dir }}"
+  register: pg_isready
+  until: pg_isready.rc == 0
+  retries: 30
+  delay: 1
+- name: Get the container port
+  command: docker compose port postgres 5432
+  args:
+      chdir: "{{ check_db_schema_dir }}"
+  register: container_port
+- name: Export the server URI
+  set_fact:
+      cacheable: true
+      tox_environment:
+          CHECK_DB_SCHEMA_SERVER_URI: postgresql://postgres:check-db-schema@{{ container_port.stdout | trim }}
