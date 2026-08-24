@@ -95,7 +95,7 @@
     nodeset: vm-debian-12-m1m
 
 - job:
-    name: check-db-schema
+    name: check-db-schema-pg15
     description: >-
       Compare a service's SQLAlchemy models against its own alembic
       migrations; see wazo-tools/check-db-schema/README.md.
